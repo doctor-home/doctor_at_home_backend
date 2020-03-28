@@ -7,8 +7,10 @@ import com.doctors.athome.repos.entities.HealthReportDTO;
 public interface HealthReportService {
 	
 	public List<HealthReportDTO> findAll();
-	public HealthReportDTO findHealthReport(Long patientID);
+	public HealthReportDTO findHealthReportByID(String healthReportID);
+	public HealthReportDTO findHealthReport(String patientID);
 	public void save(HealthReportDTO healthReport);
+	public void delete(String healthReportID);
 	
 
 }

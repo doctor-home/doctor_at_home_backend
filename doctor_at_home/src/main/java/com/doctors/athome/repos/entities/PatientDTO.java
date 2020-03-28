@@ -2,40 +2,46 @@ package com.doctors.athome.repos.entities;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.doctors.athome.annotations.CascadeSave;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@Document(collection="patients")
+@Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PatientDTO {
-	@Transient
-	public static final String SEQUENCE_NAME = "patients_sequence";
 	
 	@Id
-	private long patientID;
+	private String patientID;
 	
 	private String name;
 	
 	private String phone;
 	
-	private HealthReportDTO lastReport;
-	
-	private String MLTriage;
+	private String city;
 	
 	private String language;
 	
-	private boolean treated;
+	private int daysUnderInspection;
 	
-	private List<OrganizationDTO> organization;
+	private int fitness;
 	
+	private boolean smoker;
+	
+	@DBRef
+	@Field("preconditions")
+	@CascadeSave
 	private List<PreconditionDTO> preconditions;
 	
-	private int daysUnderInspection;
-	private int fitness;
-	private boolean smoker;
+	@DBRef
+	@CascadeSave
+	private PatientSummaryDTO summary;
+	
 	public List<PreconditionDTO> getPreconditions() {
 		return preconditions;
 	}
@@ -56,7 +62,7 @@ public class PatientDTO {
 	}
 
 
-	public long getPatientID() {
+	public String getPatientID() {
 		return patientID;
 	}
 	
@@ -66,20 +72,23 @@ public class PatientDTO {
 	}
 
 
-	public PatientDTO(String name, String phone, String mLTriage, String language, int fitness, boolean smoker, List<OrganizationDTO> organization, List<PreconditionDTO> preconditions) {
+	@PersistenceConstructor
+	public PatientDTO(String name, String phone, String city, String language, @Value("#root.daysUnderInspection?: 0")int daysUnderInspection, int fitness,
+			@Value("#root.smoker?: false")boolean smoker, List<PreconditionDTO> preconditions, PatientSummaryDTO summary) {
 		super();
 		this.name = name;
 		this.phone = phone;
-		MLTriage = mLTriage;
+		this.city = city;
 		this.language = language;
-		this.organization = organization;
-		this.preconditions = preconditions;
-		this.smoker = smoker;
+		this.daysUnderInspection = daysUnderInspection;
 		this.fitness = fitness;
+		this.smoker = smoker;
+		this.preconditions = preconditions;
+		this.summary = summary;
 	}
 
 
-	public void setPatientID(long patientID) {
+	public void setPatientID(String patientID) {
 		this.patientID = patientID;
 	}
 
@@ -99,22 +108,7 @@ public class PatientDTO {
 		this.phone = phone;
 	}
 
-	public HealthReportDTO getLastReport() {
-		return lastReport;
-	}
-
-	public void setLastReport(HealthReportDTO lastReport) {
-		this.lastReport = lastReport;
-	}
-
-	public String getMLTriage() {
-		return MLTriage;
-	}
-
-	public void setMLTriage(String mLTriage) {
-		MLTriage = mLTriage;
-	}
-
+	
 	public String getLanguage() {
 		return language;
 	}
@@ -123,21 +117,6 @@ public class PatientDTO {
 		this.language = language;
 	}
 
-	public boolean isTreated() {
-		return treated;
-	}
-
-	public void setTreated(boolean treated) {
-		this.treated = treated;
-	}
-
-	public List<OrganizationDTO> getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(List<OrganizationDTO> organization) {
-		this.organization = organization;
-	}
 	public int getFitness() {
 		return fitness;
 	}
@@ -149,6 +128,26 @@ public class PatientDTO {
 	}
 	public void setSmoker(boolean smoker) {
 		this.smoker = smoker;
+	}
+
+
+	public PatientSummaryDTO getPatientSummary() {
+		return summary;
+	}
+
+
+	public void setPatientSummary(PatientSummaryDTO patientSummary) {
+		this.summary = patientSummary;
+	}
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 	
 	

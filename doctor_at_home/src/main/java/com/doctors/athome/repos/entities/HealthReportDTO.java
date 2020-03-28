@@ -5,25 +5,29 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="patients")
+@Document
 public class HealthReportDTO {
 
-	private PatientDTO patientDTO;
-	private LocalDateTime timestamp;
-	@Id
-	private Long id;
 	
+	@Id
+	private String healthreportID;
+	private Long patientID;
+	
+	private LocalDateTime timestamp;
+	
+	public String getHealthreportID() {
+		return healthreportID;
+	}
+	public void setHealthreportID(String healthreportID) {
+		this.healthreportID = healthreportID;
+	}
+
 	private int heartBeat;
 	private float oxygenation;
 	private float temperature;
 	private int breathingRate;
 
-	public PatientDTO getPatientDTO() {
-		return patientDTO;
-	}
-	public void setPatientDTO(PatientDTO patientDTO) {
-		this.patientDTO = patientDTO;
-	}
+	
 	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
@@ -57,15 +61,21 @@ public class HealthReportDTO {
 		this.breathingRate = breathingRate;
 	}
 
-	public HealthReportDTO(PatientDTO patientDTO, LocalDateTime timestamp, int fitness, int heartBeat,
+	public HealthReportDTO(Long patientID, LocalDateTime timestamp, int fitness, int heartBeat,
 			float oxygenation, float temperature, int breathingRate) {
 		super();
-		this.patientDTO = patientDTO;
+		this.patientID = patientID;
 		this.timestamp = timestamp;
 		this.heartBeat = heartBeat;
 		this.oxygenation = oxygenation;
 		this.temperature = temperature;
 		this.breathingRate = breathingRate;
 		
+	}
+	public Long getPatientID() {
+		return patientID;
+	}
+	public void setPatientID(Long patientID) {
+		this.patientID = patientID;
 	}
 }

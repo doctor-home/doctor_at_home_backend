@@ -12,9 +12,11 @@ public interface PatientService {
 	
 	public PatientDTO findById(String patientID);
 	
-	public void save(PatientDTO patient);
+	public PatientDTO save(PatientDTO patient);
 	
-	public void deleteByID(String ID);
+	public PatientDTO updatePatient(PatientDTO patient);
+	
+	public void deleteByID(String patientID);
 	
 
 }

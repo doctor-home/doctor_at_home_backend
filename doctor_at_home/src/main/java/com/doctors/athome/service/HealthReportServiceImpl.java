@@ -11,11 +11,24 @@ import com.doctors.athome.repos.entities.HealthReportDTO;
 @Service
 public class HealthReportServiceImpl implements HealthReportService {
 
+
 	private HealthReportRepository healthreportRepo;
 	
 	@Autowired
 	public HealthReportServiceImpl(HealthReportRepository healthreportRepo) {
 		this.healthreportRepo = healthreportRepo;
+	}
+	@Override
+	public HealthReportDTO findHealthReportByID(String healthReportID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	@Override
+	public void delete(String healthReportID) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
@@ -26,7 +39,7 @@ public class HealthReportServiceImpl implements HealthReportService {
 	}
 
 	@Override
-	public HealthReportDTO findHealthReport(Long patientID) {
+	public HealthReportDTO findHealthReport(String patientID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -3,20 +3,22 @@ package com.doctors.athome.repos.entities;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection="clinicians")
+import com.doctors.athome.annotations.CascadeSave;
+
+@Document
 public class ClinicianDTO {
 
-	@Transient
-	public static final String SEQUENCE_NAME = "clinicians_sequence";
-	
 	@Id
-	private long clinicianID;
+	private String clinicianID;
 	
 	private String name;
 	
+	@DBRef
+	@CascadeSave
 	private List<OrganizationDTO> organization;
 	
 	private List<PatientSummaryDTO> patients;
@@ -28,11 +30,11 @@ public class ClinicianDTO {
 		this.patients = patients;
 	}
 
-	public long getClinicianID() {
+	public String getClinicianID() {
 		return clinicianID;
 	}
 
-	public void setClinicianID(long clinicianID) {
+	public void setClinicianID(String clinicianID) {
 		this.clinicianID = clinicianID;
 	}
 

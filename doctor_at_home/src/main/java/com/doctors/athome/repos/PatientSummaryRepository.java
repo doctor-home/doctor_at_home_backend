@@ -3,6 +3,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.doctors.athome.repos.entities.PatientSummaryDTO;
 
-public interface PatientSummaryRepository extends MongoRepository<PatientSummaryDTO, Long> {
+public interface PatientSummaryRepository extends MongoRepository<PatientSummaryDTO, String> {
 
 }

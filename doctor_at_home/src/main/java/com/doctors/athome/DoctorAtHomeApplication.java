@@ -2,9 +2,14 @@ package com.doctors.athome;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-@SpringBootApplication
-public class DoctorAtHomeApplication {
+@EntityScan("com.doctors.athome.repos.entities")
+@EnableMongoRepositories("com.doctors.athome.repos.entities.repositories")
+@SpringBootApplication(scanBasePackages = "com.doctors.athome")
+public class DoctorAtHomeApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(DoctorAtHomeApplication.class, args);

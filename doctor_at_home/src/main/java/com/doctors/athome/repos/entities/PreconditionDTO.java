@@ -1,24 +1,27 @@
 package com.doctors.athome.repos.entities;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="patients")
+@Document
 public class PreconditionDTO {
 
 	@Id
-	private Long preconditionID;
+	private String preconditionID;
 	private String name;
 	private float probability;
+	
+	@PersistenceConstructor
 	public PreconditionDTO(String name, float probability) {
 		super();
 		this.name = name;
 		this.probability = probability;
 	}
-	public Long getPreconditionID() {
+	public String getPreconditionID() {
 		return preconditionID;
 	}
-	public void setPreconditionID(Long preconditionID) {
+	public void setPreconditionID(String preconditionID) {
 		this.preconditionID = preconditionID;
 	}
 	public String getName() {

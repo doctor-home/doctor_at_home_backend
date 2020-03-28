@@ -1,12 +1,16 @@
 package com.doctors.athome.repos.entities;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="clinicians")
+@Document
 public class PatientSummaryDTO {
+	
+	
 	@Id
-	private long patientID;
+	private String patientID;
 	
 	private String name;
 	
@@ -16,7 +20,8 @@ public class PatientSummaryDTO {
 	
 	private boolean treated;
 
-	public PatientSummaryDTO(String name, HealthReportDTO lastReport, String mLTriage, boolean treated) {
+	@PersistenceConstructor
+	public PatientSummaryDTO(String name, @Value("#root.lastReport?: null")HealthReportDTO lastReport, String mLTriage, @Value("#root.treated?: false") boolean treated) {
 		super();
 		this.name = name;
 		this.lastReport = lastReport;
@@ -24,11 +29,11 @@ public class PatientSummaryDTO {
 		this.treated = treated;
 	}
 
-	public long getPatientID() {
+	public String getPatientID() {
 		return patientID;
 	}
 
-	public void setPatientID(long patientID) {
+	public void setPatientID(String patientID) {
 		this.patientID = patientID;
 	}
 
