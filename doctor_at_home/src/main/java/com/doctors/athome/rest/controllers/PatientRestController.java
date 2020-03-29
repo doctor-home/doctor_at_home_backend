@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.doctors.athome.repos.entities.HealthReportDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
+import com.doctors.athome.repos.entities.PatientSummaryDTO;
 import com.doctors.athome.rest.error.EntityNotFoundException;
 import com.doctors.athome.service.PatientService;
 
@@ -40,6 +41,15 @@ public class PatientRestController {
 			throw new EntityNotFoundException("Patient id not found - " + patientID);
 		}
 		return patient;		
+	}
+	
+	@GetMapping("/{patientID}/summary")
+	public PatientSummaryDTO findPatientSummary(@PathVariable String patientID) {
+		PatientSummaryDTO sum = patientService.getPatientSummary(patientID);
+		if(sum == null) {
+			throw new EntityNotFoundException("No summary found for given patient Id - " + patientID);
+		}
+		return sum;		
 	}
 	
 	@GetMapping("/{patientID}/health-reports")

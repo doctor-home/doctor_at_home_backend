@@ -19,5 +19,6 @@ public class GetUserWithCustomInterfaceController {
 		Authentication authentication = authenticationFacade.getAuthentication();
 		return authentication.getName();
 	}
+	
 
 }

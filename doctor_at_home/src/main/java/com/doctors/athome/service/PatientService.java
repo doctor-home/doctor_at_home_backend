@@ -4,12 +4,15 @@ import java.util.List;
 
 import com.doctors.athome.repos.entities.HealthReportDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
+import com.doctors.athome.repos.entities.PatientSummaryDTO;
 
 public interface PatientService {
 	
 	public List<PatientDTO> findAll();
 	
 	public PatientDTO findByClinicianID(String clinicianID);
+	
+	public PatientSummaryDTO getPatientSummary(String patientID);
 	
 	public PatientDTO findById(String patientID);
 	
