@@ -3,6 +3,7 @@ package com.doctors.athome.repos.entities;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -14,19 +15,16 @@ public class PatientSummaryDTO {
 	
 	private String name;
 	
+	@DBRef
 	private HealthReportDTO lastReport;
 	
-	private String MLTriage;
 	
-	private boolean treated;
 
 	@PersistenceConstructor
-	public PatientSummaryDTO(String name, @Value("#root.lastReport?: null")HealthReportDTO lastReport, String mLTriage, @Value("#root.treated?: false") boolean treated) {
+	public PatientSummaryDTO(String name, @Value("#root.lastReport?: null")HealthReportDTO lastReport, @Value("#root.treated?: false") boolean treated) {
 		super();
 		this.name = name;
 		this.lastReport = lastReport;
-		MLTriage = mLTriage;
-		this.treated = treated;
 	}
 
 	public String getPatientID() {
@@ -53,21 +51,6 @@ public class PatientSummaryDTO {
 		this.lastReport = lastReport;
 	}
 
-	public String getMLTriage() {
-		return MLTriage;
-	}
-
-	public void setMLTriage(String mLTriage) {
-		MLTriage = mLTriage;
-	}
-
-	public boolean isTreated() {
-		return treated;
-	}
-
-	public void setTreated(boolean treated) {
-		this.treated = treated;
-	}
 	
 
 }

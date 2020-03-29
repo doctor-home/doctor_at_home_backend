@@ -13,5 +13,6 @@ public interface ClinicianService {
 	public List<PatientSummaryDTO> findPatients();
 	public ClinicianDTO findByID(String clinicianID);
 	public void Delete(String clinicianID);
+	public ClinicianDTO findByUsername(String username);
 	
 }

@@ -17,7 +17,7 @@ public class OrganizationDTO {
 		super();
 		this.name = name;
 	}
-
+	
 	public String getOrganizationID() {
 		return organizationID;
 	}
@@ -33,5 +33,6 @@ public class OrganizationDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	
 }

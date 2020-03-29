@@ -3,12 +3,13 @@ package com.doctors.athome.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.doctors.athome.repos.ClinicianRepository;
-import com.doctors.athome.repos.HealthReportRepository;
 import com.doctors.athome.repos.entities.ClinicianDTO;
 import com.doctors.athome.repos.entities.PatientSummaryDTO;
 
+@Service
 public class ClinicianServiceImpl implements ClinicianService {
 	private ClinicianRepository clinicianrepo;
 	
@@ -51,6 +52,11 @@ public class ClinicianServiceImpl implements ClinicianService {
 	public void Delete(String clinicianID) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ClinicianDTO findByUsername(String username) {
+		return null;
 	}
 
 }

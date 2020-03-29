@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.doctors.athome.repos.entities.HealthReportDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
+import com.doctors.athome.repos.entities.PatientSummaryDTO;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -45,9 +48,8 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
-	public PatientDTO save(PatientDTO patient) {
-		mongoTemplate.save(patient);
-		return patient;
+	public PatientDTO savePatient(PatientDTO patient) {
+		return mongoTemplate.save(patient);
 	}
 
 	@Override
@@ -60,8 +62,26 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	public PatientDTO updatePatient(PatientDTO patient) {
-		mongoTemplate.save(patient);
-		return patient;
+		return mongoTemplate.save(patient);
+	}
+
+	@Override
+	public List<HealthReportDTO> findHealthReports(String patientID) {
+		List<HealthReportDTO> hlth = null;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("patientID").is(patientID));
+		hlth = mongoTemplate.find(query, HealthReportDTO.class);
+		return hlth;
+	}
+
+	@Override
+	public HealthReportDTO saveHealthReport(HealthReportDTO healthReport) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("_id").is(healthReport.getPatientID()));
+		Update update = new Update();
+		update.addToSet("lastReport", healthReport);
+		mongoTemplate.findAndModify(query, update, PatientSummaryDTO.class);
+		return mongoTemplate.save(healthReport);
 	}
 
 }

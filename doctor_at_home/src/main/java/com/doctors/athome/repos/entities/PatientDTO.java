@@ -1,13 +1,11 @@
 package com.doctors.athome.repos.entities;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.doctors.athome.annotations.CascadeSave;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -25,6 +23,8 @@ public class PatientDTO {
 	
 	private String city;
 	
+	private String clinicianID;
+	
 	private String language;
 	
 	private int daysUnderInspection;
@@ -33,21 +33,20 @@ public class PatientDTO {
 	
 	private boolean smoker;
 	
-	@DBRef
-	@Field("preconditions")
-	@CascadeSave
-	private List<PreconditionDTO> preconditions;
+	private String preconditions;
+	
+	private boolean under_observation;
+	
 	
 	@DBRef
-	@CascadeSave
 	private PatientSummaryDTO summary;
 	
-	public List<PreconditionDTO> getPreconditions() {
+	public String getPreconditions() {
 		return preconditions;
 	}
 
 
-	public void setPreconditions(List<PreconditionDTO> preconditions) {
+	public void setPreconditions(String preconditions) {
 		this.preconditions = preconditions;
 	}
 
@@ -74,17 +73,20 @@ public class PatientDTO {
 
 	@PersistenceConstructor
 	public PatientDTO(String name, String phone, String city, String language, @Value("#root.daysUnderInspection?: 0")int daysUnderInspection, int fitness,
-			@Value("#root.smoker?: false")boolean smoker, List<PreconditionDTO> preconditions, PatientSummaryDTO summary) {
+			@Value("#root.smoker?: false")boolean smoker, @Value("#root.smoker?: false")boolean under_observation, String clinicianID, String preconditions, PatientSummaryDTO summary) {
 		super();
 		this.name = name;
 		this.phone = phone;
 		this.city = city;
 		this.language = language;
 		this.daysUnderInspection = daysUnderInspection;
+		this.under_observation = under_observation;
 		this.fitness = fitness;
 		this.smoker = smoker;
 		this.preconditions = preconditions;
 		this.summary = summary;
+		this.clinicianID = clinicianID;
+		this.summary.setName(name);
 	}
 
 
@@ -149,7 +151,27 @@ public class PatientDTO {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	
-	
+
+
+	public String getClinicianID() {
+		return clinicianID;
+	}
+
+
+	public void setClinicianID(String clinicianID) {
+		this.clinicianID = clinicianID;
+	}
+
+
+	public boolean isUnder_observation() {
+		return under_observation;
+	}
+
+
+	public void setUnder_observation(boolean under_observation) {
+		this.under_observation = under_observation;
+	}
+
+
 
 }

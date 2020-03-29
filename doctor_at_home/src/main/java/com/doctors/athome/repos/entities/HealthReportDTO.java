@@ -11,10 +11,16 @@ public class HealthReportDTO {
 	
 	@Id
 	private String healthreportID;
-	private Long patientID;
 	
 	private LocalDateTime timestamp;
 	
+	private String patientID;
+	
+	private int heartBeat;
+	private float oxygenation;
+	private float temperature;
+	private int breathingRate;
+	private int ML_Triage;
 	public String getHealthreportID() {
 		return healthreportID;
 	}
@@ -22,10 +28,6 @@ public class HealthReportDTO {
 		this.healthreportID = healthreportID;
 	}
 
-	private int heartBeat;
-	private float oxygenation;
-	private float temperature;
-	private int breathingRate;
 
 	
 	public LocalDateTime getTimestamp() {
@@ -61,21 +63,28 @@ public class HealthReportDTO {
 		this.breathingRate = breathingRate;
 	}
 
-	public HealthReportDTO(Long patientID, LocalDateTime timestamp, int fitness, int heartBeat,
-			float oxygenation, float temperature, int breathingRate) {
+	public HealthReportDTO(LocalDateTime timestamp, String patientID, int heartBeat,
+			float oxygenation, float temperature, int breathingRate, int ml_triage) {
 		super();
-		this.patientID = patientID;
 		this.timestamp = timestamp;
+		this.patientID = patientID;
 		this.heartBeat = heartBeat;
 		this.oxygenation = oxygenation;
 		this.temperature = temperature;
 		this.breathingRate = breathingRate;
+		this.ML_Triage = ml_triage;
 		
 	}
-	public Long getPatientID() {
+	public int getML_Triage() {
+		return ML_Triage;
+	}
+	public void setML_Triage(int mL_Triage) {
+		ML_Triage = mL_Triage;
+	}
+	public String getPatientID() {
 		return patientID;
 	}
-	public void setPatientID(Long patientID) {
+	public void setPatientID(String patientID) {
 		this.patientID = patientID;
 	}
 }

@@ -2,6 +2,7 @@ package com.doctors.athome.service;
 
 import java.util.List;
 
+import com.doctors.athome.repos.entities.HealthReportDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
 
 public interface PatientService {
@@ -12,7 +13,11 @@ public interface PatientService {
 	
 	public PatientDTO findById(String patientID);
 	
-	public PatientDTO save(PatientDTO patient);
+	public List<HealthReportDTO> findHealthReports(String patientID);
+	
+	public PatientDTO savePatient(PatientDTO patient);
+	
+	public HealthReportDTO saveHealthReport(HealthReportDTO healthReport);
 	
 	public PatientDTO updatePatient(PatientDTO patient);
 	

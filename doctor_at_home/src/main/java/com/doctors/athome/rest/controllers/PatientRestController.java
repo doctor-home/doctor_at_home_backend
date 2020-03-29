@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.doctors.athome.repos.entities.HealthReportDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
 import com.doctors.athome.rest.error.EntityNotFoundException;
 import com.doctors.athome.service.PatientService;
 
 @RestController
-@RequestMapping("/api/dah/v0/patients")
+@RequestMapping("/api/dah/v0/patient")
 public class PatientRestController {
 
 	
@@ -27,7 +28,7 @@ public class PatientRestController {
 		this.patientService = patientService;
 	}
 	
-	@GetMapping
+	@GetMapping("/patients")
 	public List<PatientDTO> findAll(){
 		return patientService.findAll();
 	}
@@ -41,12 +42,29 @@ public class PatientRestController {
 		return patient;		
 	}
 	
+	@GetMapping("/{patientID}/health-reports")
+	public List<HealthReportDTO> findPatientHealthreport(@PathVariable String patientID) {
+		List<HealthReportDTO> hlth = patientService.findHealthReports(patientID);
+		if(hlth == null || hlth.isEmpty()) {
+			throw new EntityNotFoundException("Health report not found for given patient Id - " + patientID);
+		}
+		return hlth;		
+	}
+	
 	@PostMapping
 	public PatientDTO addPatient(@RequestBody PatientDTO patient) {
 		if(patient.getPatientSummary() == null) {
-			throw new RunTimeException("Patient summary is required");
+			throw new RuntimeException("Patient summary is required");
 		}
-		return patientService.save(patient);
+		return patientService.savePatient(patient);
+	}
+	
+	@PostMapping("/health-report")
+	public HealthReportDTO addPatientHealthreport(@RequestBody HealthReportDTO hlth) {
+		if(hlth.getTimestamp() == null) {
+			throw new RuntimeException("Time stamp for this health report is required");
+		}
+		return patientService.saveHealthReport(hlth);
 	}
 	
 	@PutMapping
