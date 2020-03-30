@@ -100,7 +100,7 @@ public class PatientServiceImpl implements PatientService {
 		if(username != null) {
 			Query query = new Query();
 			query.addCriteria(Criteria.where("_id").is(patientID).
-					elemMatch(Criteria.where("username").is(username)));
+					elemMatch(Criteria.where("userName").is(username)));
 			clinician = mongoTemplate.findOne(query, ClinicianDTO.class);
 		}
 		return clinician != null;

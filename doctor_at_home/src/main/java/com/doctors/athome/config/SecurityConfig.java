@@ -15,8 +15,8 @@ import com.doctors.athome.service.MongoUserDetailsService;
 
 @Configuration
 @EnableConfigurationProperties
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-	
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	MongoUserDetailsService userDetailsService;
 
@@ -24,34 +24,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
-		
 
-		
 	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/api/dah/v0/**/health-reports").permitAll()
-		.antMatchers(HttpMethod.POST, "/api/dah/v0/clinician").hasAuthority("admin")
-		.antMatchers(HttpMethod.GET, "/api/dah/v0/organization/organizations").hasAuthority("admin")
-		.antMatchers(HttpMethod.POST, "/api/dah/v0/organization").hasAuthority("admin")
-		.antMatchers(HttpMethod.GET, "/api/dah/v0/patient/patients").hasAuthority("admin")
-		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/**/health-reports").permitAll()
-		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/clinician").permitAll()
-		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/organization/organizations").permitAll()
-		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/organization").permitAll()
-		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/patient/patients").permitAll()
+		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/**").permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.httpBasic()
 		.and()
 		.sessionManagement().disable();
-			
-	}	
+	
+	}
 
 }

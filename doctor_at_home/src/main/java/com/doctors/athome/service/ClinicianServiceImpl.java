@@ -90,7 +90,7 @@ public class ClinicianServiceImpl implements ClinicianService {
 	public ClinicianDTO findByUsername(String username) {
 		ClinicianDTO clinician = null;
 		Query query = new Query();
-		query.addCriteria(Criteria.where("username").is(username));
+		query.addCriteria(Criteria.where("userName").is(username));
 		clinician = mongoTemplate.findOne(query, ClinicianDTO.class);
 		return clinician;
 	}
