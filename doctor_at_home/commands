@@ -5,13 +5,13 @@ Use maven plugin to build
 -> 2. Navigate to doctor_at_home
 
 
--> 3. Run mvnw dockerfile:build
+-> 3. Run mvnw dockerfile:build  #faster option
 	or Run mvnw clean package dockerfile:build 
 
--> 4. docker run doctor_at_home/athome:0.0.1-SNAPSHOT
+-> 4. docker volume create --name=dah-repo
 
--> 5. docker run -d --name dbserver mongo:4
+-> 5. docker run --name=dah-server --publish=80:8080 \
+		--volume=dah-repo:/var/lib/athome/dah-repo \
+     	doctor_at_home/athome:0.0.1-SNAPSHOT
 
-
--> 6. docker run --link dbserver -p 80:8080 doctor_at_home/athome:0.0.1-SNAPSHOT
 
