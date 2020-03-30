@@ -1,0 +1,20 @@
+Use maven plugin to build
+
+-> Navigate to doctor_at_home
+
+
+Run ./mvn dockerfile:build
+or Run ./mvn clean package dockerfile:build
+
+docker run doctor_at_home/athome:0.0.1-SNAPSHOT
+
+docker run mongo:4   #to pull mongodb image
+
+docker run -d --name dbserver mongo:4
+
+
+docker run --link dbserver -p 80:8080 doctor_at_home/athome:0.0.1-SNAPSHOT
+
+
+
+container run on localhost:80

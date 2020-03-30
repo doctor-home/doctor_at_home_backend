@@ -28,16 +28,16 @@ public class ClinicianCSVToMongo {
 	  public Step step2() {
 	    return stepBuilderFactory.get("step2")
 	    		.<ClinicianDTO, ClinicianDTO>chunk(10)
-	    		.reader(reader())
-	    		.writer(writer()).build();
+	    		.reader(clin_reader())
+	    		.writer(clin_writer()).build();
 	  }
 	  
 	  
 
 	  @Bean
-	  public FlatFileItemReader<ClinicianDTO> reader() {
+	  public FlatFileItemReader<ClinicianDTO> clin_reader() {
 	    FlatFileItemReader<ClinicianDTO> reader = new FlatFileItemReader<>();
-	    reader.setResource(new ClassPathResource("centers.csv"));
+	    reader.setResource(new ClassPathResource("physicians.csv"));
 	    reader.setLinesToSkip(1);
 	    reader.setLineMapper(new DefaultLineMapper<ClinicianDTO>() {{
 	      setLineTokenizer(new DelimitedLineTokenizer() {});
@@ -48,7 +48,7 @@ public class ClinicianCSVToMongo {
 	  }
 	 
 	  @Bean
-	  public MongoItemWriter<ClinicianDTO> writer() {
+	  public MongoItemWriter<ClinicianDTO> clin_writer() {
 	    MongoItemWriter<ClinicianDTO> writer = new MongoItemWriter<ClinicianDTO>();
 	    writer.setTemplate(mongoTemplate);
 	    writer.setCollection("ClinicianDTO");

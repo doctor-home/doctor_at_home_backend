@@ -26,12 +26,13 @@ public class OrganizationcsvToMongo {
 
 	  @Bean
 	  public Step step1() {
-	    return stepBuilderFactory.get("step1").<OrganizationDTO, OrganizationDTO>chunk(10).reader(reader())
-	        .writer(writer()).build();
+	    return stepBuilderFactory.get("step1").<OrganizationDTO, OrganizationDTO>chunk(10)
+	    		.reader(org_reader())
+	    		.writer(org_writer()).build();
 	  }
 
 	  @Bean
-	  public FlatFileItemReader<OrganizationDTO> reader() {
+	  public FlatFileItemReader<OrganizationDTO> org_reader() {
 	    FlatFileItemReader<OrganizationDTO> reader = new FlatFileItemReader<>();
 	    reader.setResource(new ClassPathResource("centers.csv"));
 	    reader.setLinesToSkip(1);
@@ -44,7 +45,7 @@ public class OrganizationcsvToMongo {
 	  }
 
 	  @Bean
-	  public MongoItemWriter<OrganizationDTO> writer() {
+	  public MongoItemWriter<OrganizationDTO> org_writer() {
 	    MongoItemWriter<OrganizationDTO> writer = new MongoItemWriter<OrganizationDTO>();
 	    writer.setTemplate(mongoTemplate);
 	    writer.setCollection("OrganizationDTO");

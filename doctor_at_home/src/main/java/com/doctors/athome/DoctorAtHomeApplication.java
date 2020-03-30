@@ -15,5 +15,7 @@ public class DoctorAtHomeApplication extends SpringBootServletInitializer{
 	public static void main(String[] args) {
 		SpringApplication.run(DoctorAtHomeApplication.class, args);
 	}
+	
+	
 
 }

@@ -22,7 +22,7 @@ import com.doctors.athome.service.ClinicianService;
 @RequestMapping("/api/dah/v0/clinician")
 public class ClinicianRestController {
 
-private ClinicianService clinicianService;
+	private ClinicianService clinicianService;
 	
 	@Autowired
 	public ClinicianRestController(ClinicianService clinicianService) {
@@ -32,6 +32,10 @@ private ClinicianService clinicianService;
 	@PostMapping
 	public ClinicianDTO addClinician(@RequestBody ClinicianDTO clinician) {
 		return clinicianService.save(clinician);
+	}
+	@PostMapping("/login")
+	public ClinicianDTO login() {
+		return clinicianService.getCurrentUser();
 	}
 	@PutMapping
 	public ClinicianDTO updateClinician(@RequestBody ClinicianDTO clinician) {

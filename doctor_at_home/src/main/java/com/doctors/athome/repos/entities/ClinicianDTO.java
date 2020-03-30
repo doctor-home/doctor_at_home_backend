@@ -5,12 +5,11 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.doctors.athome.annotations.CascadeSave;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Document
+@Document("ClinicianDTO")
 public class ClinicianDTO {
 
 	@Id
@@ -22,18 +21,23 @@ public class ClinicianDTO {
 	
 	private String password;
 	
-	@DBRef
-	@CascadeSave
+	@JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
 	private List<OrganizationDTO> organization;
 	
+	@JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
 	private List<PatientSummaryDTO> patients;
 
 	@PersistenceConstructor
-	public ClinicianDTO(String name, List<OrganizationDTO> organization, List<PatientSummaryDTO> patients) {
+	public ClinicianDTO(String clinicianID, String name, List<OrganizationDTO> organization, List<PatientSummaryDTO> patients) {
 		super();
+		this.clinicianID = clinicianID;
 		this.name = name;
 		this.organization = organization;
 		this.patients = patients;
+	}
+	
+	public ClinicianDTO() {
+		super();
 	}
 
 	public String getClinicianID() {
@@ -61,7 +65,7 @@ public class ClinicianDTO {
 	}
 	public void addOrganization(OrganizationDTO org) {
 		if(organization == null) {
-			organization = new ArrayList<>();
+			organization = new ArrayList<OrganizationDTO>();
 		}
 		organization.add(org);
 	}
@@ -75,7 +79,7 @@ public class ClinicianDTO {
 	}
 	public void addPatient(PatientSummaryDTO patient) {
 		if(patients == null) {
-			patients = new ArrayList<>();
+			patients = new ArrayList<PatientSummaryDTO>();
 		}
 		patients.add(patient);
 	}

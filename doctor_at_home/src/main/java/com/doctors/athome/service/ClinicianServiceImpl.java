@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import com.doctors.athome.config.GetUserWithCustomInterfaceController;
+import com.doctors.athome.config.AuthenticationFacade;
 import com.doctors.athome.repos.entities.ClinicianDTO;
 import com.doctors.athome.repos.entities.OrganizationDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
@@ -18,10 +18,10 @@ import com.doctors.athome.repos.entities.PatientSummaryDTO;
 public class ClinicianServiceImpl implements ClinicianService {
 	private final MongoTemplate mongoTemplate;
 	
-	private final GetUserWithCustomInterfaceController authController;
+	private final AuthenticationFacade authController;
 	
 	@Autowired
-	public ClinicianServiceImpl(MongoTemplate mongoTemplate, GetUserWithCustomInterfaceController authController) {
+	public ClinicianServiceImpl(MongoTemplate mongoTemplate, AuthenticationFacade authController) {
 		this.authController = authController;
 		this.mongoTemplate = mongoTemplate;
 	}
@@ -97,7 +97,7 @@ public class ClinicianServiceImpl implements ClinicianService {
 
 	@Override
 	public ClinicianDTO getCurrentUser() {
-		String username = authController.currentUserNameSimple();
+		String username = authController.getCurrentUsername();
 		ClinicianDTO clinician = null;
 		if(username != null)
 			clinician = findByUsername(username);

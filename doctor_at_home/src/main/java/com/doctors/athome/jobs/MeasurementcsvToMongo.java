@@ -27,14 +27,14 @@ public class MeasurementcsvToMongo {
 	  public Step step3() {
 	    return stepBuilderFactory.get("step3")
 	    		.<HealthReportDTO, HealthReportDTO>chunk(10)
-	    		.reader(reader())
-	    		.writer(writer()).build();
+	    		.reader(hlth_reader())
+	    		.writer(hlth_writer()).build();
 	  }
 	  
 	  
 
 	  @Bean
-	  public FlatFileItemReader<HealthReportDTO> reader() {
+	  public FlatFileItemReader<HealthReportDTO> hlth_reader() {
 	    FlatFileItemReader<HealthReportDTO> reader = new FlatFileItemReader<>();
 	    reader.setResource(new ClassPathResource("measurements.csv"));
 	    reader.setLinesToSkip(1);
@@ -47,7 +47,7 @@ public class MeasurementcsvToMongo {
 	  }
 	 
 	  @Bean
-	  public MongoItemWriter<HealthReportDTO> writer() {
+	  public MongoItemWriter<HealthReportDTO> hlth_writer() {
 	    MongoItemWriter<HealthReportDTO> writer = new MongoItemWriter<HealthReportDTO>();
 	    writer.setTemplate(mongoTemplate);
 	    writer.setCollection("HealthReportDTO");

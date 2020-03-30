@@ -1,14 +1,16 @@
 package com.doctors.athome.repos.entities;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@Document("PatientSummaryDTO")
 public class PatientSummaryDTO {
-	
 	
 	@Id
 	private String patientID;
@@ -21,10 +23,13 @@ public class PatientSummaryDTO {
 	
 
 	@PersistenceConstructor
-	public PatientSummaryDTO(String name, @Value("#root.lastReport?: null")HealthReportDTO lastReport, @Value("#root.treated?: false") boolean treated) {
+	public PatientSummaryDTO(String patientID, String name) {
 		super();
 		this.name = name;
-		this.lastReport = lastReport;
+		this.patientID = patientID;
+	}
+	public PatientSummaryDTO() {
+		super();
 	}
 
 	public String getPatientID() {

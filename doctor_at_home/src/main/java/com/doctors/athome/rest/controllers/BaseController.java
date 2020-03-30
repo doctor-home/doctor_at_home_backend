@@ -12,5 +12,7 @@ public class BaseController {
 	public String sayHello() {
 		return "Hello world, HELLO";
 	}
+	
+	
 
 }

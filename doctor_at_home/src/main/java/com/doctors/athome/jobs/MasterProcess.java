@@ -20,6 +20,8 @@ public class MasterProcess {
 	  private ClinicianCSVToMongo clinicianJob;
 	 @Autowired
 	  private MeasurementcsvToMongo healthMsJob;
+	 @Autowired
+	  private PatientcsvToMongo patientJob;
 	 
 	 @Bean
 	  public Job readCSVFile() {
@@ -28,6 +30,7 @@ public class MasterProcess {
 	    		.start(organizationJob.step1())
 	    		.next(clinicianJob.step2())
 	    		.next(healthMsJob.step3())
+	    		.next(patientJob.step4())
 	    		.build();
 	  }
 

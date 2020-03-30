@@ -10,8 +10,7 @@ public class OrganizationFromcsvMapper implements FieldSetMapper<OrganizationDTO
 
 	@Override
 	public OrganizationDTO mapFieldSet(FieldSet fieldSet) throws BindException {
-		OrganizationDTO result = new OrganizationDTO(fieldSet.readString(1));
-		result.setOrganizationID(fieldSet.readString(2));
+		OrganizationDTO result = new OrganizationDTO(fieldSet.readString(2), fieldSet.readString(1));
 		return result;
 	}
 

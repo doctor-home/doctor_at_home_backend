@@ -1,10 +1,15 @@
 package com.doctors.athome.repos.entities;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@Document("OrganizationDTO")
 public class OrganizationDTO {
 
 	@Id
@@ -13,10 +18,12 @@ public class OrganizationDTO {
 	private String name;
 
 	@PersistenceConstructor
-	public OrganizationDTO(String name) {
+	public OrganizationDTO(String organizationID, String name) {
 		super();
+		this.organizationID = organizationID;
 		this.name = name;
 	}
+	public OrganizationDTO(){super();}
 	
 	public String getOrganizationID() {
 		return organizationID;

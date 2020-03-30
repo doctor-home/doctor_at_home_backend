@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import com.doctors.athome.config.GetUserWithCustomInterfaceController;
+import com.doctors.athome.config.AuthenticationFacade;
 import com.doctors.athome.repos.entities.ClinicianDTO;
 import com.doctors.athome.repos.entities.HealthReportDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
@@ -20,10 +20,10 @@ public class PatientServiceImpl implements PatientService {
 	
 	
 	private final MongoTemplate mongoTemplate;
-	private final GetUserWithCustomInterfaceController authController;
+	private final AuthenticationFacade authController;
 	
 	@Autowired
-	public PatientServiceImpl(MongoTemplate mongoTemplate, GetUserWithCustomInterfaceController authController) {
+	public PatientServiceImpl(MongoTemplate mongoTemplate, AuthenticationFacade authController) {
 		this.mongoTemplate = mongoTemplate;
 		this.authController = authController;
 	}
@@ -86,14 +86,16 @@ public class PatientServiceImpl implements PatientService {
 	public HealthReportDTO saveHealthReport(HealthReportDTO healthReport) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("_id").is(healthReport.getPatientID()));
-		Update update = new Update();
-		update.addToSet("lastReport", healthReport);
-		mongoTemplate.findAndModify(query, update, PatientSummaryDTO.class);
+		PatientSummaryDTO sum = new PatientSummaryDTO();
+		sum.setName(mongoTemplate.findOne(query, PatientDTO.class).getName());
+		sum.setLastReport(healthReport);
+		sum.setPatientID(healthReport.getPatientID());
+		mongoTemplate.save(sum);
 		return mongoTemplate.save(healthReport);
 	}
 	
 	private boolean isPatient(String patientID) {
-		String username = authController.currentUserNameSimple();
+		String username = authController.getCurrentUsername();
 		ClinicianDTO clinician = null;
 		if(username != null) {
 			Query query = new Query();

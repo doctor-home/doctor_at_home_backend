@@ -7,10 +7,10 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.doctors.athome.annotations.CascadeSave;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@Document
+@Document("PatientDTO")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PatientDTO {
 	
@@ -27,6 +27,8 @@ public class PatientDTO {
 	
 	private String language;
 	
+	private int age;
+	
 	private int daysUnderInspection;
 	
 	private int fitness;
@@ -39,6 +41,7 @@ public class PatientDTO {
 	
 	
 	@DBRef
+	@JsonInclude(Include.NON_NULL)
 	private PatientSummaryDTO summary;
 	
 	public String getPreconditions() {
@@ -72,23 +75,24 @@ public class PatientDTO {
 
 
 	@PersistenceConstructor
-	public PatientDTO(String name, String phone, String city, String language, @Value("#root.daysUnderInspection?: 0")int daysUnderInspection, int fitness,
-			@Value("#root.smoker?: false")boolean smoker, @Value("#root.smoker?: false")boolean under_observation, String clinicianID, String preconditions, PatientSummaryDTO summary) {
+	public PatientDTO(String patientID, String name, String phone, String city, String language, int age, @Value("#root.daysUnderInspection?: 0")int daysUnderInspection, int fitness,
+			@Value("#root.smoker?: false")boolean smoker, @Value("#root.under_observation?: false")boolean under_observation, String clinicianID, String preconditions) {
 		super();
+		this.patientID = patientID;
 		this.name = name;
 		this.phone = phone;
 		this.city = city;
 		this.language = language;
+		this.setAge(age);
 		this.daysUnderInspection = daysUnderInspection;
 		this.under_observation = under_observation;
 		this.fitness = fitness;
 		this.smoker = smoker;
 		this.preconditions = preconditions;
-		this.summary = summary;
 		this.clinicianID = clinicianID;
-		this.summary.setName(name);
+		this.summary = new PatientSummaryDTO(patientID, name);
+	
 	}
-
 
 	public void setPatientID(String patientID) {
 		this.patientID = patientID;
@@ -170,6 +174,16 @@ public class PatientDTO {
 
 	public void setUnder_observation(boolean under_observation) {
 		this.under_observation = under_observation;
+	}
+
+
+	public int getAge() {
+		return age;
+	}
+
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 

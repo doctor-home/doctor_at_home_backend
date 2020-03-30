@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
+		
 
 		
 	}
@@ -35,8 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/api/dah/v0/**/health-reports").hasRole("admin")
-		.antMatchers(HttpMethod.GET, "/api/dah/v0/organizations").hasRole("admin")
+		.antMatchers(HttpMethod.POST, "/api/dah/v0/**/health-reports").hasAuthority("admin")
+		.antMatchers(HttpMethod.POST, "/api/dah/v0/clinician").hasAuthority("admin")
+		.antMatchers(HttpMethod.GET, "/api/dah/v0/organization/organizations").hasAuthority("admin")
+		.antMatchers(HttpMethod.POST, "/api/dah/v0/organization").hasAuthority("admin")
+		.antMatchers(HttpMethod.GET, "/api/dah/v0/patient/patients").hasAuthority("admin")
 		.anyRequest().authenticated()
 		.and()
 		.httpBasic()

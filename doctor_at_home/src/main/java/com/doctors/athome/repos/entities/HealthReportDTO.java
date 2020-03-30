@@ -3,24 +3,26 @@ package com.doctors.athome.repos.entities;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document("HealthReportDTO")
 public class HealthReportDTO {
 
 	
 	@Id
 	private String healthreportID;
 	
-	private LocalDateTime timestamp;
+	//Tweak around. Mongodb does not accept null values. 
+	private LocalDateTime timestamp = LocalDateTime.now();
 	
-	private String patientID;
+	private String patientID = "";
 	
 	private int heartBeat;
 	private float oxygenation;
 	private float temperature;
 	private int breathingRate;
-	private int ML_Triage;
+	private int ml_triage;
 	public String getHealthreportID() {
 		return healthreportID;
 	}
@@ -63,23 +65,30 @@ public class HealthReportDTO {
 		this.breathingRate = breathingRate;
 	}
 
-	public HealthReportDTO(LocalDateTime timestamp, String patientID, int heartBeat,
+
+	@PersistenceConstructor
+	public HealthReportDTO(String healthreportID, LocalDateTime timestamp, String patientID, int heartBeat,
 			float oxygenation, float temperature, int breathingRate, int ml_triage) {
 		super();
+		this.healthreportID = healthreportID;
 		this.timestamp = timestamp;
 		this.patientID = patientID;
 		this.heartBeat = heartBeat;
 		this.oxygenation = oxygenation;
 		this.temperature = temperature;
 		this.breathingRate = breathingRate;
-		this.ML_Triage = ml_triage;
+		this.ml_triage = ml_triage;
 		
 	}
-	public int getML_Triage() {
-		return ML_Triage;
+	public int getMl_triage() {
+		return ml_triage;
 	}
-	public void setML_Triage(int mL_Triage) {
-		ML_Triage = mL_Triage;
+	public void setMl_triage(int ml_triage) {
+		this.ml_triage = ml_triage;
+	}
+	public HealthReportDTO() {
+		super();
+		
 	}
 	public String getPatientID() {
 		return patientID;
