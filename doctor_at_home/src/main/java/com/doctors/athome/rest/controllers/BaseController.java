@@ -11,20 +11,20 @@ import com.doctors.athome.service.CallService;
 @RestController
 @RequestMapping("/api/dah/v0")
 public class BaseController {
-	
+
 	private CallService callservice;
-	
+
 	@Autowired
 	public BaseController(CallService callservice) {
 		this.callservice = callservice;
 	}
-	
+
 	@GetMapping("/call/{patientID}")
 	public String callTestPatient(@PathVariable String patientID) {
-		callservice.callPatient(patientID)
+		callservice.callPatient(patientID);
 		return "Call successfuly placed";
 	}
-	
-	
+
+
 
 }
