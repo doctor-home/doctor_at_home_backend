@@ -21,7 +21,7 @@ public class BaseController {
 	
 	@GetMapping("/call/{patientID}")
 	public String callTestPatient(@PathVariable String patientID) {
-		callservice.callPatient(patientID)
+		callservice.callPatient(patientID);
 		return "Call successfuly placed";
 	}
 	
