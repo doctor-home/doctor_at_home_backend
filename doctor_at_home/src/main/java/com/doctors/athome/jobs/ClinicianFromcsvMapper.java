@@ -15,8 +15,6 @@ import com.doctors.athome.repos.entities.PatientSummaryDTO;
 
 public class ClinicianFromcsvMapper implements FieldSetMapper<ClinicianDTO>{
 
-	@Autowired
-	BCryptPasswordEncoder passwordEncoder;
 	@Override
 	public ClinicianDTO mapFieldSet(FieldSet fieldSet) throws BindException {
 		List<OrganizationDTO> orgs = new ArrayList<OrganizationDTO>();
@@ -25,7 +23,7 @@ public class ClinicianFromcsvMapper implements FieldSetMapper<ClinicianDTO>{
 		ClinicianDTO result = new ClinicianDTO(fieldSet.readString(2), fieldSet.readString(1), 
 							orgs, new ArrayList<PatientSummaryDTO>());
 		result.setUserName(fieldSet.readString(3));
-		String password = passwordEncoder.encode(fieldSet.readString(4));
+		String password = new BCryptPasswordEncoder().encode(fieldSet.readString(4));
 		result.setPassword(password);
 		return result;
 	}
