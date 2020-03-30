@@ -33,7 +33,7 @@ public class ClinicianRestController {
 	public ClinicianDTO addClinician(@RequestBody ClinicianDTO clinician) {
 		return clinicianService.save(clinician);
 	}
-	@PostMapping("/login")
+	@PostMapping("/loginUser")
 	public ClinicianDTO login() {
 		return clinicianService.getCurrentUser();
 	}
