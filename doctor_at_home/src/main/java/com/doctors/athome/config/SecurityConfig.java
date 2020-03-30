@@ -41,11 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers(HttpMethod.GET, "/api/dah/v0/organization/organizations").hasAuthority("admin")
 		.antMatchers(HttpMethod.POST, "/api/dah/v0/organization").hasAuthority("admin")
 		.antMatchers(HttpMethod.GET, "/api/dah/v0/patient/patients").hasAuthority("admin")
+		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/**/health-reports").hasAuthority("admin")
+		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/clinician").hasAuthority("admin")
+		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/organization/organizations").hasAuthority("admin")
+		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/organization").hasAuthority("admin")
+		.antMatchers(HttpMethod.OPTIONS, "/api/dah/v0/patient/patients").hasAuthority("admin")
 		.anyRequest().authenticated()
 		.and()
 		.httpBasic()
 		.and()
-		.csrf().disable()
 		.sessionManagement().disable();
 			
 	}	

@@ -11,7 +11,7 @@ Use maven plugin to build
 -> 4. docker volume create --name=dah-repo
 
 -> 5. docker run --name=dah-server --publish=80:8080 \
-		--volume=dah-repo:/var/lib/athome/dah-repo \
+		--volume=dah-repo:/var/lib/athome/dah-repo -d \
      	doctor_at_home/athome:0.0.1-SNAPSHOT
 
 
