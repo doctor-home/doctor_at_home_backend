@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.doctors</groupId>
 	<artifactId>athome</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>doctor_at_home</name>
 	<description>Doctor at home covid hackathon</description>
 
@@ -23,11 +23,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
-		<dependency>
-        	<groupId>com.twilio.sdk</groupId>
-        	<artifactId>twilio-java-sdk</artifactId>
-        	<version>3.4.5</version>
-    	</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -69,7 +64,7 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<scope>test</scope>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -101,29 +96,21 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				
 			</plugin>
 			<plugin>
       			<groupId>com.spotify</groupId>
       			<artifactId>dockerfile-maven-plugin</artifactId>
       			<version>1.4.10</version>
       			<configuration>
-        			<repository>doctor_at_home/${project.artifactId}</repository>
-        			<tag>${project.version}</tag>
-        			<buildArgs>
-        				<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-        			</buildArgs>
+      				<finalName>dah-server</finalName>
+      				<repository>doctor_at_home/${project.artifactId}</repository>
+      				<tag>latest</tag>
+      				<buildArgs>
+      					<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+      				</buildArgs>
       			</configuration>
-      			<executions>
-      				<execution>
-      					<id>default</id>
-      					<phase>package</phase>
-      					<goals>
-      						<goal>build</goal>
-      						<!-- goal>push</goal> -->
-      					</goals>
-      				</execution>
-      			</executions>
-    	</plugin>
+      		</plugin>
 		</plugins>
 		
 	</build>

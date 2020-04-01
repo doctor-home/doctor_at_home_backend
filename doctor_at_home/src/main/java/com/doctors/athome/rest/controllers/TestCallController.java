@@ -10,13 +10,12 @@ import com.doctors.athome.repos.entities.Call;
 import com.doctors.athome.service.CallService;
 
 @RestController
-@RequestMapping("/api/dah/v0")
-public class BaseController {
+@RequestMapping("/api/dah")
+public class TestCallController {
 
 	private CallService callservice;
-
 	@Autowired
-	public BaseController(CallService callservice) {
+	public TestCallController(CallService callservice) {
 		this.callservice = callservice;
 	}
 

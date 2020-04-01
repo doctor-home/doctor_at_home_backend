@@ -36,11 +36,8 @@ public class PatientcsvToMongo {
 	  @Bean
 	  public FlatFileItemReader<PatientDTO> pat_reader() {
 	    FlatFileItemReader<PatientDTO> reader = new FlatFileItemReader<>();
-	    reader.setResource(new ClassPathResource("patients_list.csv"));
+	    reader.setResource(new ClassPathResource("/testdata/patients_list.csv"));
 	    reader.setLinesToSkip(1);
-	    
-	    //RegexLineTokenizer rlt = new RegexLineTokenizer();
-	    //rlt.setRegex("(?![^)(]*\\([^)(]*?\\)\\)),(?![^\\[]*\\])");
 	    reader.setLineMapper(new DefaultLineMapper<PatientDTO>() {{
 	      setLineTokenizer(new DelimitedLineTokenizer() {
 	    	  

@@ -1,0 +1,28 @@
+version: '3'
+services:
+  dah-mongodb:
+    container_name: dah-mongodb
+    image: mongo:4
+    restart: always
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    ports:
+      - 27017:27017
+  dah-server:
+    container_name: dah-server
+    image: doctor_at_home/athome:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - dah-app:/var/lib/athome/dah-app
+    ports:
+      - 8081:8080
+    depends_on:
+      - dah-mongodb
+    logging:
+      driver: json-file
+volumes:
+    dah-app:
+        external: false

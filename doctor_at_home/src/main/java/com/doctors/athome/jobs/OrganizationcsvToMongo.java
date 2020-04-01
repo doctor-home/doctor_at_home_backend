@@ -34,7 +34,7 @@ public class OrganizationcsvToMongo {
 	  @Bean
 	  public FlatFileItemReader<OrganizationDTO> org_reader() {
 	    FlatFileItemReader<OrganizationDTO> reader = new FlatFileItemReader<>();
-	    reader.setResource(new ClassPathResource("centers.csv"));
+	    reader.setResource(new ClassPathResource("/testdata/centers.csv"));
 	    reader.setLinesToSkip(1);
 	    reader.setLineMapper(new DefaultLineMapper<OrganizationDTO>() {{
 	      setLineTokenizer(new DelimitedLineTokenizer() {});

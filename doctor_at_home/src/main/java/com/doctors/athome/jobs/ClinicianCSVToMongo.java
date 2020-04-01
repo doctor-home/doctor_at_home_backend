@@ -37,7 +37,7 @@ public class ClinicianCSVToMongo {
 	  @Bean
 	  public FlatFileItemReader<ClinicianDTO> clin_reader() {
 	    FlatFileItemReader<ClinicianDTO> reader = new FlatFileItemReader<>();
-	    reader.setResource(new ClassPathResource("physicians.csv"));
+	    reader.setResource(new ClassPathResource("/testdata/physicians.csv"));
 	    reader.setLinesToSkip(1);
 	    reader.setLineMapper(new DefaultLineMapper<ClinicianDTO>() {{
 	      setLineTokenizer(new DelimitedLineTokenizer() {});

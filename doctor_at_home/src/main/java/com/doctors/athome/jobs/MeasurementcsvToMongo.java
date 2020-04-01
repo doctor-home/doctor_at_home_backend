@@ -36,7 +36,7 @@ public class MeasurementcsvToMongo {
 	  @Bean
 	  public FlatFileItemReader<HealthReportDTO> hlth_reader() {
 	    FlatFileItemReader<HealthReportDTO> reader = new FlatFileItemReader<>();
-	    reader.setResource(new ClassPathResource("measurements.csv"));
+	    reader.setResource(new ClassPathResource("/testdata/measurements.csv"));
 	    reader.setLinesToSkip(1);
 	    reader.setLineMapper(new DefaultLineMapper<HealthReportDTO>() {{
 	      setLineTokenizer(new DelimitedLineTokenizer() {});
