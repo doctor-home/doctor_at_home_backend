@@ -16,7 +16,7 @@ import com.doctors.athome.repos.entities.OrganizationDTO;
 
 @EnableBatchProcessing
 @Configuration
-public class OrganizationcsvToMongo {
+public class OrganizationcsvJob {
 	
 	  @Autowired
 	  private StepBuilderFactory stepBuilderFactory;
@@ -38,7 +38,7 @@ public class OrganizationcsvToMongo {
 	    reader.setLinesToSkip(1);
 	    reader.setLineMapper(new DefaultLineMapper<OrganizationDTO>() {{
 	      setLineTokenizer(new DelimitedLineTokenizer() {});
-	      setFieldSetMapper(new OrganizationFromcsvMapper());
+	      setFieldSetMapper(new CenterscsvMapper());
 	      
 	    }});
 	    return reader;

@@ -13,16 +13,17 @@ import com.doctors.athome.repos.entities.ClinicianDTO;
 import com.doctors.athome.repos.entities.OrganizationDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
 import com.doctors.athome.repos.entities.PatientSummaryDTO;
+import com.doctors.athome.repos.entities.UserDTO;
 
 @Service
 public class ClinicianServiceImpl implements ClinicianService {
 	private final MongoTemplate mongoTemplate;
 	
-	private final AuthenticationFacade authController;
+	private final AuthenticationFacade auth;
 	
 	@Autowired
-	public ClinicianServiceImpl(MongoTemplate mongoTemplate, AuthenticationFacade authController) {
-		this.authController = authController;
+	public ClinicianServiceImpl(MongoTemplate mongoTemplate, AuthenticationFacade auth) {
+		this.auth = auth;
 		this.mongoTemplate = mongoTemplate;
 	}
 
@@ -91,18 +92,26 @@ public class ClinicianServiceImpl implements ClinicianService {
 		ClinicianDTO clinician = null;
 		Query query = new Query();
 		query.addCriteria(Criteria.where("userName").is(username));
-		clinician = mongoTemplate.findOne(query, ClinicianDTO.class);
+		UserDTO user = mongoTemplate.findOne(query, UserDTO.class);
+		if(user != null) {
+			query = new Query();
+			query.addCriteria(Criteria.where("_id").is(user.getClinicianId()));
+			clinician = mongoTemplate.findOne(query, ClinicianDTO.class);
+		}
 		return clinician;
 	}
+	
 
 	@Override
-	public ClinicianDTO getCurrentUser() {
-		String username = authController.getCurrentUsername();
+	public ClinicianDTO getCurrentClinician() {
+		String username = auth.getCurrentUsername();
 		ClinicianDTO clinician = null;
 		if(username != null)
 			clinician = findByUsername(username);
 		return clinician;
 	}
+	
+	
 
 	@Override
 	public List<OrganizationDTO> findOrganization(String clinicianID) {

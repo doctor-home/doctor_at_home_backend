@@ -18,7 +18,7 @@ import com.doctors.athome.repos.entities.PatientDTO;
 
 @EnableBatchProcessing
 @Configuration
-public class PatientcsvToMongo {
+public class PatientcsvJob {
 	
 	  @Autowired
 	  private StepBuilderFactory stepBuilderFactory;
@@ -27,8 +27,8 @@ public class PatientcsvToMongo {
 	  private MongoTemplate mongoTemplate;
 
 	  @Bean
-	  public Step step4() {
-	    return stepBuilderFactory.get("step4").<PatientDTO, PatientDTO>chunk(10)
+	  public Step step5() {
+	    return stepBuilderFactory.get("step5").<PatientDTO, PatientDTO>chunk(10)
 	    		.reader(pat_reader())
 	    		.writer(pat_writer()).build();
 	  }
@@ -45,7 +45,7 @@ public class PatientcsvToMongo {
 	    			  "name","surname","phone","city","language","age","preconditions","fitness","smoker","clinician","clinicianID",
 	    			  "organization","organizationID","under_observation"});}
 	      });
-	      setFieldSetMapper(new PatientFromcsvMapper());
+	      setFieldSetMapper(new PatientscsvMapper());
 	      
 	    }});
 	    return reader;

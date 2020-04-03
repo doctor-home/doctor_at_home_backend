@@ -6,6 +6,7 @@ import com.doctors.athome.repos.entities.ClinicianDTO;
 import com.doctors.athome.repos.entities.OrganizationDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
 import com.doctors.athome.repos.entities.PatientSummaryDTO;
+import com.doctors.athome.repos.entities.UserDTO;
 
 public interface ClinicianService {
 
@@ -19,7 +20,7 @@ public interface ClinicianService {
 	public ClinicianDTO findByID(String clinicianID);
 	public void Delete(String clinicianID);
 	public ClinicianDTO findByUsername(String username);
-	public ClinicianDTO getCurrentUser();
+	public ClinicianDTO getCurrentClinician();
 	
 	
 }

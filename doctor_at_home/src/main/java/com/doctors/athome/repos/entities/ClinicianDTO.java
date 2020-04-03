@@ -17,10 +17,6 @@ public class ClinicianDTO {
 	
 	private String name;
 	
-	private String userName;
-	
-	private String password;
-	
 	@JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
 	private List<OrganizationDTO> organization;
 	
@@ -84,24 +80,5 @@ public class ClinicianDTO {
 		patients.add(patient);
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
-	
-	
-	
 
 }

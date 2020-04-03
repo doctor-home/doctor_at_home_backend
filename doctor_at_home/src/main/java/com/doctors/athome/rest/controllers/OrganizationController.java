@@ -13,7 +13,7 @@ import com.doctors.athome.repos.OrganizationRepository;
 import com.doctors.athome.repos.entities.OrganizationDTO;
 
 @RestController
-@RequestMapping("/api/dah/v0/organization")
+@RequestMapping("/api/dah/v0/organizations")
 public class OrganizationController {
 
 private OrganizationRepository orgrepo;
@@ -22,7 +22,7 @@ private OrganizationRepository orgrepo;
 	public OrganizationController(OrganizationRepository orgrepo) {
 		this.orgrepo = orgrepo;
 	}
-	@GetMapping("/organizations")
+	@GetMapping
 	public List<OrganizationDTO> findAll(){
 		return orgrepo.findAll();
 	}

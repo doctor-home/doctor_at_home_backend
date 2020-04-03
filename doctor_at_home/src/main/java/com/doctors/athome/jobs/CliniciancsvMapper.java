@@ -13,7 +13,7 @@ import com.doctors.athome.repos.entities.ClinicianDTO;
 import com.doctors.athome.repos.entities.OrganizationDTO;
 import com.doctors.athome.repos.entities.PatientSummaryDTO;
 
-public class ClinicianFromcsvMapper implements FieldSetMapper<ClinicianDTO>{
+public class CliniciancsvMapper implements FieldSetMapper<ClinicianDTO>{
 
 	@Override
 	public ClinicianDTO mapFieldSet(FieldSet fieldSet) throws BindException {
@@ -22,9 +22,6 @@ public class ClinicianFromcsvMapper implements FieldSetMapper<ClinicianDTO>{
 		orgs.add(org);
 		ClinicianDTO result = new ClinicianDTO(fieldSet.readString(2), fieldSet.readString(1), 
 							orgs, new ArrayList<PatientSummaryDTO>());
-		result.setUserName(fieldSet.readString(3));
-		String password = new BCryptPasswordEncoder().encode(fieldSet.readString(4));
-		result.setPassword(password);
 		return result;
 	}
 

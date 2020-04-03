@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.doctors.athome.repos.entities.Call;
+import com.doctors.athome.repos.entities.CallDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
 
 @Service
@@ -37,12 +37,12 @@ public class CallServiceImpl implements CallService {
 	}
 
 	@Override
-	public Call callPatient(String patientID) {
+	public CallDTO callPatient(String patientID) {
 		PatientDTO patient = patientService.findById(patientID);
-		Call call = null;
+		CallDTO call = null;
 		if(patient!=null) {
 			try {
-				call = new Call(DAH_TELEPHONE_NUMBER, patient.getPhone(), patientID, new URL(WEBHOOK));
+				call = new CallDTO(DAH_TELEPHONE_NUMBER, patient.getPhone(), patientID, new URL(WEBHOOK));
 				return postRequest(call);
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -51,12 +51,12 @@ public class CallServiceImpl implements CallService {
 		return call;
 	}
 	
-	private Call postRequest(Call call) {
+	private CallDTO postRequest(CallDTO call) {
 		String outboundUrl = "http://doctor-at-home-bff.eastus.azurecontainer.io:8080/outbound-call";
 
-		HttpEntity<Call> request = new HttpEntity<>(call);
+		HttpEntity<CallDTO> request = new HttpEntity<>(call);
 		
-		ResponseEntity<Call> response = restTemplate.exchange(outboundUrl, HttpMethod.POST, request, Call.class);
+		ResponseEntity<CallDTO> response = restTemplate.exchange(outboundUrl, HttpMethod.POST, request, CallDTO.class);
 		return response.getBody();
 		
 	}

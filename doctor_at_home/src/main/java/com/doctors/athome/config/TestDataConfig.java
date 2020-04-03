@@ -1,4 +1,4 @@
-package com.doctors.athome.jobs;
+package com.doctors.athome.config;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -8,20 +8,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.doctors.athome.jobs.CliniciancsvJob;
+import com.doctors.athome.jobs.HealthreportscsvJob;
+import com.doctors.athome.jobs.OrganizationcsvJob;
+import com.doctors.athome.jobs.PatientcsvJob;
+import com.doctors.athome.jobs.UserDocJob;
+
+//add Profile({value={"local"}}) to stop container from run db jobs in prod mode
+//@Profile(value = {"local"})
 @EnableBatchProcessing
 @Configuration
-public class MasterProcess {
+public class TestDataConfig {
 	@Autowired
-	  private JobBuilderFactory jobBuilderFactory;
-	
+	  private JobBuilderFactory jobBuilderFactory;	
 	 @Autowired
-	  private OrganizationcsvToMongo organizationJob;
+	  private OrganizationcsvJob organizationJob;
 	 @Autowired
-	  private ClinicianCSVToMongo clinicianJob;
+	  private CliniciancsvJob clinicianJob;
 	 @Autowired
-	  private MeasurementcsvToMongo healthMsJob;
+	  private UserDocJob userJob;
 	 @Autowired
-	  private PatientcsvToMongo patientJob;
+	  private HealthreportscsvJob healthMsJob;
+	 @Autowired
+	  private PatientcsvJob patientJob;
 	 
 	 @Bean
 	  public Job readCSVFile() {
@@ -29,8 +38,9 @@ public class MasterProcess {
 	    		.incrementer(new RunIdIncrementer())
 	    		.start(organizationJob.step1())
 	    		.next(clinicianJob.step2())
-	    		.next(healthMsJob.step3())
-	    		.next(patientJob.step4())
+	    		.next(userJob.step3())
+	    		.next(healthMsJob.step4())
+	    		.next(patientJob.step5())
 	    		.build();
 	  }
 

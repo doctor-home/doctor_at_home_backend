@@ -6,7 +6,7 @@ import org.springframework.validation.BindException;
 
 import com.doctors.athome.repos.entities.OrganizationDTO;
 
-public class OrganizationFromcsvMapper implements FieldSetMapper<OrganizationDTO>{
+public class CenterscsvMapper implements FieldSetMapper<OrganizationDTO>{
 
 	@Override
 	public OrganizationDTO mapFieldSet(FieldSet fieldSet) throws BindException {

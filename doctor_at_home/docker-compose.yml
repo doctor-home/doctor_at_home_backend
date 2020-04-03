@@ -8,7 +8,7 @@ services:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     ports:
-      - 27017:27017
+      - 27017:27107
   dah-server:
     container_name: dah-server
     image: doctor_at_home/athome:latest
@@ -18,7 +18,7 @@ services:
     volumes:
       - dah-app:/var/lib/athome/dah-app
     ports:
-      - 8081:8080
+      - 8080:8080
     depends_on:
       - dah-mongodb
     logging:

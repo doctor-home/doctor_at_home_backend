@@ -18,7 +18,7 @@ import com.doctors.athome.rest.error.EntityNotFoundException;
 import com.doctors.athome.service.PatientService;
 
 @RestController
-@RequestMapping("/api/dah/v0/patient")
+@RequestMapping("/api/dah/v0/patients")
 public class PatientRestController {
 
 	
@@ -29,7 +29,7 @@ public class PatientRestController {
 		this.patientService = patientService;
 	}
 	
-	@GetMapping("/patients")
+	@GetMapping
 	public List<PatientDTO> findAll(){
 		return patientService.findAll();
 	}

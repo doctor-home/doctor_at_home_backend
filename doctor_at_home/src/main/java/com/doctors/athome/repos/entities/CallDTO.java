@@ -3,13 +3,13 @@ package com.doctors.athome.repos.entities;
 import java.net.URL;
 
 
-public class Call {
+public class CallDTO {
 	
 	private String from;
 	private String to;
 	private String patientID;
 	private URL webhook;
-	public Call(String from, String to, String patientID, URL webhook) {
+	public CallDTO(String from, String to, String patientID, URL webhook) {
 		super();
 		this.from = from;
 		this.to = to;

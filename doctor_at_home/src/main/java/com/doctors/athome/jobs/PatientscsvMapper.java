@@ -14,7 +14,7 @@ import com.doctors.athome.repos.entities.PatientDTO;
 import com.doctors.athome.repos.entities.PatientSummaryDTO;
 
 
-public class PatientFromcsvMapper implements FieldSetMapper<PatientDTO>{
+public class PatientscsvMapper implements FieldSetMapper<PatientDTO>{
 	
 	@Override
 	public PatientDTO mapFieldSet(FieldSet fieldSet) throws BindException {

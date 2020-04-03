@@ -19,7 +19,7 @@ import com.doctors.athome.rest.error.EntityNotFoundException;
 import com.doctors.athome.service.ClinicianService;
 
 @RestController
-@RequestMapping("/api/dah/v0/clinician")
+@RequestMapping("/api/dah/v0/clinicians")
 public class ClinicianRestController {
 
 	private ClinicianService clinicianService;
@@ -33,16 +33,13 @@ public class ClinicianRestController {
 	public ClinicianDTO addClinician(@RequestBody ClinicianDTO clinician) {
 		return clinicianService.save(clinician);
 	}
-	@PostMapping("/loginUser")
-	public ClinicianDTO login() {
-		return clinicianService.getCurrentUser();
-	}
+	
 	@PutMapping
 	public ClinicianDTO updateClinician(@RequestBody ClinicianDTO clinician) {
 		return clinicianService.update(clinician);
 	}
 	
-	@GetMapping("/clinicians")
+	@GetMapping
 	public List<ClinicianDTO> findAll(){
 		return clinicianService.findAll();
 	}
@@ -92,11 +89,11 @@ public class ClinicianRestController {
 	
 	@GetMapping("/current")
 	public ClinicianDTO findCurrentUser() {
-		ClinicianDTO clinician = clinicianService.getCurrentUser();
+		ClinicianDTO clinician = clinicianService.getCurrentClinician();
 		if(clinician == null){
-			throw new RuntimeException("No user is currently logged in");
+			throw new RuntimeException("No clinician is currently logged in");
 		}
-		return clinicianService.getCurrentUser();
+		return clinicianService.getCurrentClinician();
 	}
 	
 	

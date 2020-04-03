@@ -12,46 +12,45 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import com.doctors.athome.repos.entities.ClinicianDTO;
+import com.doctors.athome.repos.entities.HealthReportDTO;
 
 @EnableBatchProcessing
 @Configuration
-public class ClinicianCSVToMongo {
+public class HealthreportscsvJob {
 	  @Autowired
 	  private StepBuilderFactory stepBuilderFactory;
 
 	  @Autowired
 	  private MongoTemplate mongoTemplate;
 
-	
 	  @Bean
-	  public Step step2() {
-	    return stepBuilderFactory.get("step2")
-	    		.<ClinicianDTO, ClinicianDTO>chunk(10)
-	    		.reader(clin_reader())
-	    		.writer(clin_writer()).build();
+	  public Step step4() {
+	    return stepBuilderFactory.get("step4")
+	    		.<HealthReportDTO, HealthReportDTO>chunk(10)
+	    		.reader(hlth_reader())
+	    		.writer(hlth_writer()).build();
 	  }
 	  
 	  
 
 	  @Bean
-	  public FlatFileItemReader<ClinicianDTO> clin_reader() {
-	    FlatFileItemReader<ClinicianDTO> reader = new FlatFileItemReader<>();
-	    reader.setResource(new ClassPathResource("/testdata/physicians.csv"));
+	  public FlatFileItemReader<HealthReportDTO> hlth_reader() {
+	    FlatFileItemReader<HealthReportDTO> reader = new FlatFileItemReader<>();
+	    reader.setResource(new ClassPathResource("/testdata/measurements.csv"));
 	    reader.setLinesToSkip(1);
-	    reader.setLineMapper(new DefaultLineMapper<ClinicianDTO>() {{
+	    reader.setLineMapper(new DefaultLineMapper<HealthReportDTO>() {{
 	      setLineTokenizer(new DelimitedLineTokenizer() {});
-	      setFieldSetMapper(new ClinicianFromcsvMapper());
+	      setFieldSetMapper(new HealthreportcsvMapper());
 	      
 	    }});
 	    return reader;
 	  }
 	 
 	  @Bean
-	  public MongoItemWriter<ClinicianDTO> clin_writer() {
-	    MongoItemWriter<ClinicianDTO> writer = new MongoItemWriter<ClinicianDTO>();
+	  public MongoItemWriter<HealthReportDTO> hlth_writer() {
+	    MongoItemWriter<HealthReportDTO> writer = new MongoItemWriter<HealthReportDTO>();
 	    writer.setTemplate(mongoTemplate);
-	    writer.setCollection("ClinicianDTO");
+	    writer.setCollection("HealthReportDTO");
 	    return writer;
 	  }
 
