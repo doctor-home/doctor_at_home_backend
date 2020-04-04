@@ -70,11 +70,11 @@ public class PatientRestController {
 	}
 	
 	@PostMapping("/health-report")
-	public HealthReportDTO addPatientHealthreport(@RequestBody HealthReportDTO hlth) {
-		if(hlth.getTimestamp() == null) {
+	public HealthReportDTO addPatientHealthreport(@RequestBody HealthReportDTO healthReport) {
+		if(healthReport.getTimestamp() == null) {
 			throw new RuntimeException("Time stamp for this health report is required");
 		}
-		return patientService.saveHealthReport(hlth);
+		return patientService.saveHealthReport(healthReport);
 	}
 	
 	@PutMapping

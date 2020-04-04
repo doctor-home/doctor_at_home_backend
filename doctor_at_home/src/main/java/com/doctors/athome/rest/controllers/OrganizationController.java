@@ -27,7 +27,7 @@ public class OrganizationController {
 		return orgrepo.findAll();
 	}
 	@PostMapping
-	public OrganizationDTO addOrg(@RequestBody OrganizationDTO org){
-		return orgrepo.save(org);
+	public OrganizationDTO addOrganization(@RequestBody OrganizationDTO organization){
+		return orgrepo.save(organization);
 	}
 }

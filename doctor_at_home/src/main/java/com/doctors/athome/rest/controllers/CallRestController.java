@@ -11,12 +11,12 @@ import com.doctors.athome.service.CallService;
 
 @RestController
 @RequestMapping("/api/dah")
-public class TestCallController {
+public class CallRestController {
 
 	private final CallService callservice;
 	
 	@Autowired
-	public TestCallController(CallService callservice) {
+	public CallRestController(CallService callservice) {
 		this.callservice = callservice;
 	}
 

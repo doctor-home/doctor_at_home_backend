@@ -38,12 +38,7 @@ public class DefaultDataLoader implements ApplicationRunner {
 		userService.addUser(
 				new UserDTO(null, defaultUser, 
 									passwordEncoder.encode(defaultPassword),
-									new ArrayList<String>() {
-										private static final long serialVersionUID = 1L;
-										{
-											add(defaultRole);
-										}
-									},true,true,true,true));
+									new String[] {defaultRole},true));
 		
 	}
 

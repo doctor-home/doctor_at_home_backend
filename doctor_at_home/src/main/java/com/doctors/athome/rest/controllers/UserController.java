@@ -36,7 +36,7 @@ public class UserController {
 	
 	@PutMapping
 	public UserDTO updateUser(@RequestBody UserDTO user) {
-		if(user.getClinicianId() == null) {
+		if(user.getClinicianID() == null) {
 			throw new RuntimeException("Cannot update user data, clinicianID is missing");
 		}
 		return userservice.addUser(user);

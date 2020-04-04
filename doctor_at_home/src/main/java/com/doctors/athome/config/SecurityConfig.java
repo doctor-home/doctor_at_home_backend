@@ -40,6 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 	
+	private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/v2/api-docs",
+            "/webjars/**",
+            "/management/**",
+            "/*.html",
+            "/index*",
+            "/docs*"
+    };
+	
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -57,14 +67,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/api/dah/v0/patients/health-report*").permitAll()
+		.antMatchers(HttpMethod.POST, "/api/dah/v0/patients/health-report*").permitAll() //to be changed to admin role
 		.antMatchers("/api/dah/v0/patients*").hasRole("ADMIN")
 		.antMatchers("/api/dah/v0/clinicians/current*").hasRole("ADMIN")
 		.antMatchers("/api/dah/v0/clinician*").hasRole("ADMIN")
 		.antMatchers("/api/dah/v0/user*").hasRole("ADMIN")
 		.antMatchers("/api/dah/v0/organization*").hasRole("ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/dah/auth/**").permitAll()
-		.antMatchers("/api/dah", "/*.html").permitAll()
+		.antMatchers(AUTH_WHITELIST).permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.cors()

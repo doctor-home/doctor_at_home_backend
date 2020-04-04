@@ -106,7 +106,7 @@ public class ClinicianServiceImpl implements ClinicianService {
 		UserDTO user = mongoTemplate.findOne(query, UserDTO.class);
 		if(user != null) {
 			query = new Query();
-			query.addCriteria(Criteria.where("_id").is(user.getClinicianId()));
+			query.addCriteria(Criteria.where("_id").is(user.getClinicianID()));
 			clinician = mongoTemplate.findOne(query, ClinicianDTO.class);
 		}
 		return clinician;

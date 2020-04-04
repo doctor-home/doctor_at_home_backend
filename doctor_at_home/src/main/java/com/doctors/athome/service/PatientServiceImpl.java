@@ -102,7 +102,7 @@ public class PatientServiceImpl implements PatientService {
 			query.addCriteria(Criteria.where("username").is(username));
 			
 			UserDTO user = mongoTemplate.findOne(query, UserDTO.class);
-			query = new Query().addCriteria(Criteria.where("_id").is(user.getClinicianId()).
+			query = new Query().addCriteria(Criteria.where("_id").is(user.getClinicianID()).
 					and("patients").elemMatch(Criteria.where("_id").is(patientID)));
 			List<ClinicianDTO> clinician = mongoTemplate.find(query, ClinicianDTO.class);
 			isPatient = !clinician.isEmpty();
