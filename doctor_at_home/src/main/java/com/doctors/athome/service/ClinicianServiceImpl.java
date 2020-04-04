@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.doctors.athome.config.AuthenticationFacade;
+import com.doctors.athome.repos.ClinicianRepository;
 import com.doctors.athome.repos.entities.ClinicianDTO;
 import com.doctors.athome.repos.entities.OrganizationDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
@@ -20,6 +21,7 @@ public class ClinicianServiceImpl implements ClinicianService {
 	private final MongoTemplate mongoTemplate;
 	
 	private final AuthenticationFacade auth;
+	
 	
 	@Autowired
 	public ClinicianServiceImpl(MongoTemplate mongoTemplate, AuthenticationFacade auth) {
@@ -57,7 +59,7 @@ public class ClinicianServiceImpl implements ClinicianService {
 		List<PatientDTO> patients = null;
 		Query query = new Query();
 		query.addCriteria(Criteria.where("under_observation").
-				is(false).elemMatch(Criteria.where("clinicianID").is(clinicianID)));
+				is(false).and("summary").elemMatch(Criteria.where("clinicianID").is(clinicianID)));
 		patients = mongoTemplate.find(query, PatientDTO.class);
 		return patients;
 	}
@@ -79,6 +81,15 @@ public class ClinicianServiceImpl implements ClinicianService {
 		clinician = mongoTemplate.findOne(query, ClinicianDTO.class);
 		return clinician;
 	}
+	
+	@Override
+	public UserDTO findUserByID(String clinicianID) {
+		UserDTO user = null;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("_id").is(clinicianID));
+		user = mongoTemplate.findOne(query, UserDTO.class);
+		return user;
+	}
 
 	@Override
 	public void Delete(String clinicianID) {
@@ -91,7 +102,7 @@ public class ClinicianServiceImpl implements ClinicianService {
 	public ClinicianDTO findByUsername(String username) {
 		ClinicianDTO clinician = null;
 		Query query = new Query();
-		query.addCriteria(Criteria.where("userName").is(username));
+		query.addCriteria(Criteria.where("username").is(username));
 		UserDTO user = mongoTemplate.findOne(query, UserDTO.class);
 		if(user != null) {
 			query = new Query();

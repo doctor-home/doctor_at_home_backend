@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.doctors.athome.config.AuthenticationFacade;
@@ -14,6 +13,7 @@ import com.doctors.athome.repos.entities.ClinicianDTO;
 import com.doctors.athome.repos.entities.HealthReportDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
 import com.doctors.athome.repos.entities.PatientSummaryDTO;
+import com.doctors.athome.repos.entities.UserDTO;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -84,26 +84,30 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	public HealthReportDTO saveHealthReport(HealthReportDTO healthReport) {
+		healthReport = mongoTemplate.save(healthReport);
 		Query query = new Query();
 		query.addCriteria(Criteria.where("_id").is(healthReport.getPatientID()));
-		PatientSummaryDTO sum = new PatientSummaryDTO();
-		sum.setName(mongoTemplate.findOne(query, PatientDTO.class).getName());
+		PatientSummaryDTO sum = new PatientSummaryDTO(healthReport.getPatientID(), 
+				mongoTemplate.findOne(query, PatientDTO.class).getName());
 		sum.setLastReport(healthReport);
-		sum.setPatientID(healthReport.getPatientID());
 		mongoTemplate.save(sum);
-		return mongoTemplate.save(healthReport);
+		return healthReport;
 	}
 	
 	private boolean isPatient(String patientID) {
 		String username = authController.getCurrentUsername();
-		ClinicianDTO clinician = null;
+		boolean isPatient = false;
 		if(username != null) {
 			Query query = new Query();
-			query.addCriteria(Criteria.where("_id").is(patientID).
-					elemMatch(Criteria.where("userName").is(username)));
-			clinician = mongoTemplate.findOne(query, ClinicianDTO.class);
+			query.addCriteria(Criteria.where("username").is(username));
+			
+			UserDTO user = mongoTemplate.findOne(query, UserDTO.class);
+			query = new Query().addCriteria(Criteria.where("_id").is(user.getClinicianId()).
+					and("patients").elemMatch(Criteria.where("_id").is(patientID)));
+			List<ClinicianDTO> clinician = mongoTemplate.find(query, ClinicianDTO.class);
+			isPatient = !clinician.isEmpty();
 		}
-		return clinician != null;
+		return isPatient;
 	}
 
 	@Override

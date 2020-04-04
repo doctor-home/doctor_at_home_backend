@@ -22,7 +22,7 @@ import com.doctors.athome.service.PatientService;
 public class PatientRestController {
 
 	
-	private PatientService patientService;
+	private final PatientService patientService;
 	
 	@Autowired
 	public PatientRestController(PatientService patientService) {
@@ -79,6 +79,9 @@ public class PatientRestController {
 	
 	@PutMapping
 	public PatientDTO updatePatient(@RequestBody PatientDTO patient) {
+		if(patient.getPatientID() == null) {
+			throw new RuntimeException("Cannot update data, patientID is missing");
+		}
 		return patientService.updatePatient(patient);
 	}
 	

@@ -15,6 +15,7 @@ import com.doctors.athome.repos.entities.ClinicianDTO;
 import com.doctors.athome.repos.entities.OrganizationDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
 import com.doctors.athome.repos.entities.PatientSummaryDTO;
+import com.doctors.athome.repos.entities.UserDTO;
 import com.doctors.athome.rest.error.EntityNotFoundException;
 import com.doctors.athome.service.ClinicianService;
 
@@ -22,7 +23,7 @@ import com.doctors.athome.service.ClinicianService;
 @RequestMapping("/api/dah/v0/clinicians")
 public class ClinicianRestController {
 
-	private ClinicianService clinicianService;
+	private final ClinicianService clinicianService;
 	
 	@Autowired
 	public ClinicianRestController(ClinicianService clinicianService) {
@@ -36,6 +37,9 @@ public class ClinicianRestController {
 	
 	@PutMapping
 	public ClinicianDTO updateClinician(@RequestBody ClinicianDTO clinician) {
+		if(clinician.getClinicianID() == null) {
+			throw new RuntimeException("Cannot update user data, clinicianID is missing");
+		}
 		return clinicianService.update(clinician);
 	}
 	
@@ -88,7 +92,7 @@ public class ClinicianRestController {
 	}
 	
 	@GetMapping("/current")
-	public ClinicianDTO findCurrentUser() {
+	public ClinicianDTO findCurrentClinician() {
 		ClinicianDTO clinician = clinicianService.getCurrentClinician();
 		if(clinician == null){
 			throw new RuntimeException("No clinician is currently logged in");

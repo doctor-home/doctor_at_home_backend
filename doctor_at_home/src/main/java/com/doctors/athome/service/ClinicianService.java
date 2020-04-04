@@ -21,6 +21,7 @@ public interface ClinicianService {
 	public void Delete(String clinicianID);
 	public ClinicianDTO findByUsername(String username);
 	public ClinicianDTO getCurrentClinician();
+	public UserDTO findUserByID(String clinicianID);
 	
 	
 }

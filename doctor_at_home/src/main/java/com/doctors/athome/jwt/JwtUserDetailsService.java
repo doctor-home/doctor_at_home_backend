@@ -1,9 +1,6 @@
 package com.doctors.athome.jwt;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,8 +22,7 @@ public class JwtUserDetailsService implements UserDetailsService{
 		if(user == null) {
 			throw new UsernameNotFoundException("User - " + username +" - not found" );
 		}
-		List<SimpleGrantedAuthority> authorities = user.getGrantedAuthorities();
-		return new User(user.getUserName(), user.getPassword(), authorities);
+		return new User(user.getUsername(), user.getPassword(), user.getAuthorities());
 	}
 
 }

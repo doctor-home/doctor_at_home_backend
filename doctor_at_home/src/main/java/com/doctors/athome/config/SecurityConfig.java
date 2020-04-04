@@ -57,6 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
+		.antMatchers(HttpMethod.POST, "/api/dah/v0/patients/health-report*").permitAll()
+		.antMatchers("/api/dah/v0/patients*").hasRole("ADMIN")
+		.antMatchers("/api/dah/v0/clinicians/current*").hasRole("ADMIN")
+		.antMatchers("/api/dah/v0/clinician*").hasRole("ADMIN")
+		.antMatchers("/api/dah/v0/user*").hasRole("ADMIN")
+		.antMatchers("/api/dah/v0/organization*").hasRole("ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/dah/auth/**").permitAll()
 		.antMatchers("/api/dah", "/*.html").permitAll()
 		.anyRequest().authenticated()

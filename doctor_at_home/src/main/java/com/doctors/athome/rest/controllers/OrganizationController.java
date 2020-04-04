@@ -16,7 +16,7 @@ import com.doctors.athome.repos.entities.OrganizationDTO;
 @RequestMapping("/api/dah/v0/organizations")
 public class OrganizationController {
 
-private OrganizationRepository orgrepo;
+	private final OrganizationRepository orgrepo;
 	
 	@Autowired
 	public OrganizationController(OrganizationRepository orgrepo) {

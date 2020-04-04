@@ -18,9 +18,9 @@ public class UserFromCliniciancsvMapper implements FieldSetMapper<UserDTO>{
 				new ArrayList<String>() {
 					private static final long serialVersionUID = 1L;
 					{
-						add("user");
+						add("ROLE_USER");
 					}
-				});
+				},true,true,true,true);
 		return user;
 	}
 

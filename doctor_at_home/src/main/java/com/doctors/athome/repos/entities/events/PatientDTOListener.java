@@ -46,8 +46,8 @@ public class PatientDTOListener extends AbstractMongoEventListener<PatientDTO> {
 		if(source.getClinicianID() != null) {
 			ClinicianDTO clinician = mongoOperations.findById(source.getClinicianID(), ClinicianDTO.class);
 			if (clinician != null) {
-				mongoOperations.save(clinician);
 				clinician.addPatient(psum);
+				mongoOperations.save(clinician);
 			}
 			
 		

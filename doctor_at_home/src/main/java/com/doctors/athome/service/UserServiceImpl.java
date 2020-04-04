@@ -1,5 +1,7 @@
 package com.doctors.athome.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -23,10 +25,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO getUser(String userName) {
+	public UserDTO getUser(String username) {
 		UserDTO user = null;
 		Query query = new Query();
-		query.addCriteria(Criteria.where("userName").is(userName));
+		query.addCriteria(Criteria.where("username").is(username));
 		user = mongoTemplate.findOne(query, UserDTO.class);
 		return user;
 	}
@@ -43,6 +45,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO addUser(UserDTO user) {
 		return mongoTemplate.save(user);
+	}
+
+	@Override
+	public List<UserDTO> getUsers() {
+		return mongoTemplate.findAll(UserDTO.class);
 	}
 	
 	

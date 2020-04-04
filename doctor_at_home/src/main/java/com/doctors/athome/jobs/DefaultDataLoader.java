@@ -43,7 +43,7 @@ public class DefaultDataLoader implements ApplicationRunner {
 										{
 											add(defaultRole);
 										}
-									}));
+									},true,true,true,true));
 		
 	}
 
