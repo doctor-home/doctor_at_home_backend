@@ -18,7 +18,7 @@ on:
     - master
  
 
-name: frontend
+name: backend
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -39,6 +39,7 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     - run: |
+        cd doctor_at_home
         docker build . -t doctorathome.azurecr.io/backend:${{ github.sha }}
         docker push doctorathome.azurecr.io/backend:${{ github.sha }} 
       
