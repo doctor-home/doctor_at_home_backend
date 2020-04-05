@@ -1,0 +1,52 @@
+# Uses Github Actions to Deploy on Azure 
+# see https://github.com/Azure/webapps-container-deploy
+#
+# Prereqs: 
+# - Create Service Principal for RBAC
+# $WEBAPP_NAME="doctor-at-home-backend"
+# $SUBSCRIPTION_ID="4d2e2806-c9d6-452f-a871-1ff7d37ad610"
+# $RESOURCE_GROUP="doc-at-home-rg"
+#
+# az ad sp create-for-rbac --name "${WEBAPP_NAME}" --role contributor --scopes /subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP} --sdk-auth
+#    Add this as a AZURE_CREDENTIALS secret in Github 
+# - Azure Container Registry
+#   doctorathome.azurecr.io
+
+on: 
+  push:
+    branches:
+    - master
+ 
+
+name: frontend
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    # checkout the repo
+    - name: 'Checkout Github Action' 
+      uses: actions/checkout@master
+    # login to Azure 
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    # login to Azure container registry
+    - uses: azure/docker-login@v1
+      with:
+        login-server: doctorathome.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    - run: |
+        docker build . -t doctorathome.azurecr.io/backend:${{ github.sha }}
+        docker push doctorathome.azurecr.io/backend:${{ github.sha }} 
+      
+    - uses: azure/webapps-container-deploy@v1
+      with:
+        app-name: 'doctor-at-home-backend'
+        images: 'doctorathome.azurecr.io/backend:${{ github.sha }}'
+    
+    - name: Azure logout
+      run: |
+        az logout
