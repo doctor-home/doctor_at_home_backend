@@ -19,9 +19,9 @@ It reduces workload from Clinicians and supports the medical triage. Helps optim
 
 * Run mvn clean package to build jar files if doesn't exist already in directory target/
 
-* Run "docker-compose up" to build images and start container
+* Run "docker-compose up --build" to build images and start container
 
-* Run "docker-compose up -d" to build docker containers and run in detached mode
+* Run "docker-compose up -d" to run docker containers in detached mode
 
 * Go to <http://localhost:8080/pathhere> to access endpoints
 
