@@ -37,9 +37,15 @@ jobs:
         login-server: doctorathome.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
+
+    # Maven clean and install
+    - uses: "LucaFeger/action-maven-cli@master"
+
+  
     
     - run: |
         cd doctor_at_home
+        mvn clean package
         docker build . -t doctorathome.azurecr.io/backend:${{ github.sha }}
         docker push doctorathome.azurecr.io/backend:${{ github.sha }} 
       
