@@ -7,8 +7,10 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
+    command: mongod --port 27018 --shardsvr
     ports:
-      - 27017:27107
+      - 27017:27017
+      - 27018:27018
   dah-server:
     container_name: dah-server
     image: doctor_at_home/athome:latest
