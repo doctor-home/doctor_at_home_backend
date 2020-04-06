@@ -41,4 +41,4 @@ It reduces workload from Clinicians and supports the medical triage. Helps optim
 
 * A POST request to the JWT Authentication endpoint must be sent to receive a bearer token to authenticate all requests to the API endpoints
 
-* Using the Swagger UI, you can add the bearer token to all requests by  clicking the padlock icon and given in the token in form "Bearer replace_token_string_here"
+* Using the Swagger UI, you can add the bearer token to all requests by  clicking the padlock icon and giving in the token, in form "Bearer replace_token_string_here"
