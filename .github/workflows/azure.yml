@@ -42,7 +42,8 @@ jobs:
         cd doctor_at_home
 
     # Maven clean and install
-    - uses: "LucaFeger/action-maven-cli@master"
+    - name: "Maven clean and package"
+      uses: "LucaFeger/action-maven-cli@master"
       with: 
         args: "mvn clean package"
     
