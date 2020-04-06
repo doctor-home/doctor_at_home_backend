@@ -7,6 +7,7 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import com.doctors.athome.jobs.CliniciancsvJob;
 import com.doctors.athome.jobs.HealthreportscsvJob;
@@ -14,27 +15,27 @@ import com.doctors.athome.jobs.OrganizationcsvJob;
 import com.doctors.athome.jobs.PatientcsvJob;
 import com.doctors.athome.jobs.UserDocJob;
 
-//add Profile({value={"local"}}) to stop container from run db jobs in prod mode
-//@Profile(value = {"local"})
+//change to Profile({value={"local"}}) to stop container from run db jobs in prod mode
+@Profile(value = {"prod", "azure"})
 @EnableBatchProcessing
 @Configuration
 public class TestDataConfig {
 	@Autowired
-	  private JobBuilderFactory jobBuilderFactory;	
+	 private JobBuilderFactory jobBuilderFactory;	
 	 @Autowired
-	  private OrganizationcsvJob organizationJob;
+	 private OrganizationcsvJob organizationJob;
 	 @Autowired
-	  private CliniciancsvJob clinicianJob;
+	 private CliniciancsvJob clinicianJob;
 	 @Autowired
-	  private UserDocJob userJob;
+	 private UserDocJob userJob;
 	 @Autowired
-	  private HealthreportscsvJob healthMsJob;
+	 private HealthreportscsvJob healthMsJob;
 	 @Autowired
-	  private PatientcsvJob patientJob;
+	 private PatientcsvJob patientJob;
 	 
 	 @Bean
-	  public Job readCSVFile() {
-	    return jobBuilderFactory.get("readCSVFile")
+	 public Job readCSVFile() {
+		 return jobBuilderFactory.get("readCSVFile")
 	    		.incrementer(new RunIdIncrementer())
 	    		.start(organizationJob.step1())
 	    		.next(clinicianJob.step2())
