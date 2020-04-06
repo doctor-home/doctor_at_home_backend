@@ -3,14 +3,16 @@
 #
 # Prereqs: 
 # - Create Service Principal for RBAC
-# $WEBAPP_NAME="doctor-at-home-backend"
-# $SUBSCRIPTION_ID="4d2e2806-c9d6-452f-a871-1ff7d37ad610"
-# $RESOURCE_GROUP="doc-at-home-rg"
-#
-# az ad sp create-for-rbac --name "${WEBAPP_NAME}" --role contributor --scopes /subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP} --sdk-auth
-#    Add this as a AZURE_CREDENTIALS secret in Github 
-# - Azure Container Registry
-#   doctorathome.azurecr.io
+#   $WEBAPP_NAME="doctor-at-home-backend"
+#   $SUBSCRIPTION_ID="Your subscription ID"
+#   $RESOURCE_GROUP="your resource group"
+#   az ad sp create-for-rbac --name "${WEBAPP_NAME}" --role contributor --scopes /subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP} --sdk-auth
+# - Add output from above (JSON) to a secret named AZURE_CREDENTIALS (Project > Settings > Secrets)
+#   
+# - Add the Azure Container Registry login information (see Azure portal of your registry instance).
+#   Your Azure Container Registry must be there, e.g. 'doctorathome.azurecr.io'
+#   Secret REGISTRY_USERNAME: Your username for the container registry
+#   Secret REGISTRY_PASSWORD: the password
 
 on: 
   push:
