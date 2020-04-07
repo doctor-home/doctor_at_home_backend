@@ -9,4 +9,8 @@ RUN mvn package
 FROM openjdk:8-jre-alpine
 VOLUME /var/lib/athome/dah-app
 COPY --from=build /app/target/*.jar app.jar
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=prod","-jar","/app.jar"]
+
+# set profile to activate (will be overridden when starting e.g. on Azure)
+ENV profile=prod
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=${profile}","-jar","/app.jar"]
