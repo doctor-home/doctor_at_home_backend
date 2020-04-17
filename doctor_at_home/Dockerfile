@@ -11,6 +11,6 @@ VOLUME /var/lib/athome/dah-app
 COPY --from=build /app/target/*.jar app.jar
 
 # set profile to activate (will be overridden when starting e.g. on Azure)
-ENV profile=prod
+ENV PROFILE=prod
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=${profile}","-jar","/app.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=${PROFILE}","-jar","/app.jar"]
