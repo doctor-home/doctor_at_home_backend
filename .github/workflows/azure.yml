@@ -66,15 +66,15 @@ jobs:
     - name: 'Build and push container image'
       run: |
         cd doctor_at_home
-        docker build . -t doctorathome.azurecr.io/backend:${{ github.sha }}
-        docker push doctorathome.azurecr.io/backend:${{ github.sha }} 
+        docker build . -t doctorathome.azurecr.io/backend:latest
+        docker push doctorathome.azurecr.io/backend:latest 
 
     # Deploy to Azure App Service with Containers (app must exist already for this to work)
     - name: 'Deploy to Azure'
       uses: azure/webapps-container-deploy@v1
       with:
         app-name: 'doctor-at-home-backend'
-        images: 'doctorathome.azurecr.io/backend:${{ github.sha }}'
+        images: 'doctorathome.azurecr.io/backend:latest
     
     - name: Azure logout
       run: |
