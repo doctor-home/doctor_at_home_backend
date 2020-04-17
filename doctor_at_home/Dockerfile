@@ -12,7 +12,7 @@ COPY --from=build /app/target/*.jar app.jar
 
 # set profile to activate (will be overridden when starting e.g. on Azure)
 ENV PROFILE=prod
-EXPOSE 8080
 
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=${PROFILE}","-jar","/app.jar"]
