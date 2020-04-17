@@ -74,7 +74,7 @@ jobs:
       uses: azure/webapps-container-deploy@v1
       with:
         app-name: 'doctor-at-home-backend'
-        images: 'doctorathome.azurecr.io/backend:latest
+        images: 'doctorathome.azurecr.io/backend:latest'
     
     - name: Azure logout
       run: |
