@@ -31,6 +31,7 @@ Navigate to doctor_at_home
     ```powershell
     # set environment variables, as you'd configure on Azure Web App Container
     $env:PROFILE="azure"
+    $env:WEBSITES_HOSTNAME="0.0.0.0"
     $env:WEBSITES_PORT="7777"
     $env:MONGODB_DATABASE="doctor-at-home-backend-db"
     $env:MONGODB_URI="mongodb:// [...]"
