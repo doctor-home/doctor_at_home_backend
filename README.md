@@ -40,7 +40,7 @@ Navigate to doctor_at_home
     # Windows Powershell (bash users, you get the idea)
     # set environment variables, as you'd configure on Azure Web App Container
     $env:PROFILE="azure" # add "demo" profile to load demo data on startup
-    $env:WEBSITES_HOSTNAME="localhost"
+    $env:WEBSITE_HOSTNAME="localhost"
     $env:PORT="7777"
     $env:WEBSITES_PORT="7777"
     $env:MONGODB_DATABASE="doctor-at-home-backend-db"
