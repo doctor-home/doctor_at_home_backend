@@ -24,9 +24,6 @@ Navigate to doctor_at_home
     mvn clean package
     mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=${profile}"
     # open <http://localhost:8080/index>
-    
-
-
 
 * Local build and run using Docker
    * Docker-compose with embedded MongoDB
@@ -50,7 +47,7 @@ Navigate to doctor_at_home
     docker build -t doctorathome/backend:latest .
 
     # Run the container
-    docker run -e PROFILE=$env:PROFILE -e PORT=$env:PORT -e WEBSITES_PORT=$env:WEBSITES_PORT -e WEBSITES_HOSTNAME=$env:WEBSITES_HOSTNAME -e MONGODB_DATABASE=$env:MONGODB_DATABASE -e MONGODB_URI=$env:MONGODB_URI -i -p $env:PORT:$env:PORT doctorathome/backend:latest
+    docker run -e PROFILE=$env:PROFILE -e PORT=$env:PORT -e WEBSITES_PORT=$env:WEBSITES_PORT -e WEBSITE_HOSTNAME=$env:WEBSITE_HOSTNAME -e MONGODB_DATABASE=$env:MONGODB_DATABASE -e MONGODB_URI=$env:MONGODB_URI -i -p $env:PORT:$env:PORT doctorathome/backend:latest
 
     # go to http://localhost:7777/index>
     ```
