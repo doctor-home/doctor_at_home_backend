@@ -15,8 +15,11 @@ import com.doctors.athome.jobs.OrganizationcsvJob;
 import com.doctors.athome.jobs.PatientcsvJob;
 import com.doctors.athome.jobs.UserDocJob;
 
-//change to Profile({value={"local"}}) to stop container from run db jobs in prod mode
-@Profile(value = {"prod", "azure"})
+/**
+ * DB load job that will load the demo CSVs into the MongoDB. 
+ * Activate the "demo" profile and this will run on startup (may take a while, be aware of container startup timeout on Azure) 
+ */
+@Profile(value = {"demo"})
 @EnableBatchProcessing
 @Configuration
 public class TestDataConfig {

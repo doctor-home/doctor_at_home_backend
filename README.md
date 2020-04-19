@@ -19,34 +19,40 @@ This component decouples the business logic and data model from the frontend by 
 Navigate to doctor_at_home
 
 * As spring-boot application
-
     ```bash
-    profile=azure # options: azure, prod, local
+    profile=azure # options: azure, prod, local. Add "demo" to load demo data upon startup
     mvn clean package
     mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=${profile}"
-    open <http://localhost:8080/index>
+    # open <http://localhost:8080/index>
     
-* As spring-boot application, with "azure" profile (using Azure CosmosDB as database backend)
-    Windows Powershell (bash users, you get the idea)
+
+
+
+* Local build and run using Docker
+   * Docker-compose with embedded MongoDB
+   ```bash
+   docker-compose up --build
+   open <http://0.0.0.0:8080/index>
+    ```
+    * Using "azure" profile (using CosmosDB as database backend on Azure)
+    
     ```powershell
+    # Windows Powershell (bash users, you get the idea)
     # set environment variables, as you'd configure on Azure Web App Container
-    $env:PROFILE="azure"
-    $env:WEBSITES_HOSTNAME="0.0.0.0"
+    $env:PROFILE="azure" # add "demo" profile to load demo data on startup
+    $env:WEBSITES_HOSTNAME="localhost"
+    $env:PORT="7777"
     $env:WEBSITES_PORT="7777"
     $env:MONGODB_DATABASE="doctor-at-home-backend-db"
     $env:MONGODB_URI="mongodb:// [...]"
 
-    mvn clean package spring-boot:run '-Dspring-boot.run.profile=${env:PROFILE}'
+    # Build and tag container (locally)
+    docker build -t doctorathome/backend:latest .
+
+    # Run the container
+    docker run -e PROFILE=$env:PROFILE -e PORT=$env:PORT -e WEBSITES_PORT=$env:WEBSITES_PORT -e WEBSITES_HOSTNAME=$env:WEBSITES_HOSTNAME -e MONGODB_DATABASE=$env:MONGODB_DATABASE -e MONGODB_URI=$env:MONGODB_URI -i -p $env:PORT:$env:PORT doctorathome/backend:latest
 
     # go to http://localhost:7777/index>
-    ```
-
-
-* Local build and run using Docker
-
-   ```bash
-   docker-compose up --build
-   open <http://0.0.0.0:8080/index>
     ```
 
 
