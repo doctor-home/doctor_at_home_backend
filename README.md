@@ -20,16 +20,16 @@ Navigate to doctor_at_home
 
 * As spring-boot application
     ```bash
-    profile=azure # options: azure, prod, local. Add "demo" to load demo data upon startup
-    mvn clean package
-    mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=${profile}"
+    # uses profile=local upon startup
+    mvn package spring-boot:run
     # open <http://localhost:8080/index>
 
 * Local build and run using Docker
    * Docker-compose with embedded MongoDB
    ```bash
+   # uses profile=prod upon startup
    docker-compose up --build
-   open <http://0.0.0.0:8080/index>
+   # open <http://localhost:8080/index>
     ```
     * Using "azure" profile (using CosmosDB as database backend on Azure)
     
