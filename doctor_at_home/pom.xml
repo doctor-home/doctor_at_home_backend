@@ -133,6 +133,7 @@
 					<profiles>
 						<profile>prod</profile>
 						<profile>azure</profile>
+						<profile>demo</profile>
 					</profiles>
 				</configuration>
 			</plugin>
