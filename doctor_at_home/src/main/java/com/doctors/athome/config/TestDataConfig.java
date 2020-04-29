@@ -17,9 +17,9 @@ import com.doctors.athome.jobs.UserDocJob;
 
 /**
  * DB load job that will load the demo CSVs into the MongoDB. 
- * Activated profiles ("demo", "prod" or "local")  will load demo CSVs on startup (may take a while, be aware of container startup timeout on Azure) 
+ * Activated profiles ("demo" or "prod")  will load demo CSVs on startup (may take a while, be aware of container startup timeout on Azure) 
  */
-@Profile(value = {"demo", "prod", "local"})
+@Profile(value = {"demo", "prod"})
 @EnableBatchProcessing
 @Configuration
 public class TestDataConfig {
