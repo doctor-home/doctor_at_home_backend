@@ -65,9 +65,9 @@ public class ClinicianRestController {
 		}
 		return patients;
 	}
-	@GetMapping("/{clinicianID}/untreatedpatients")
-	public List<PatientDTO> findUntreatedpatients(@PathVariable String clinicianID) {
-		List<PatientDTO> patients = clinicianService.findUntreatedPatients(clinicianID);
+	@GetMapping("/{clinicianID}/observedpatients")
+	public List<PatientDTO> findObservedPatients(@PathVariable String clinicianID) {
+		List<PatientDTO> patients = clinicianService.findObservedPatients(clinicianID);
 		if(patients == null) {
 			throw new EntityNotFoundException("Clinician id not found - " + clinicianID);
 		}

@@ -55,11 +55,11 @@ public class ClinicianServiceImpl implements ClinicianService {
 	}
 
 	@Override
-	public List<PatientDTO> findUntreatedPatients(String clinicianID) {
+	public List<PatientDTO> findObservedPatients(String clinicianID) {
 		List<PatientDTO> patients = null;
 		Query query = new Query();
 		query.addCriteria(Criteria.where("under_observation").
-				is(false).and("summary").elemMatch(Criteria.where("clinicianID").is(clinicianID)));
+				is(true).and("summary").elemMatch(Criteria.where("clinicianID").is(clinicianID)));
 		patients = mongoTemplate.find(query, PatientDTO.class);
 		return patients;
 	}

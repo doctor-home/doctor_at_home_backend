@@ -14,7 +14,7 @@ public interface ClinicianService {
 	public ClinicianDTO update(ClinicianDTO clinician);
 	public List<ClinicianDTO> findAll();
 	public List<PatientDTO> findPatients(String clinicianID);
-	public List<PatientDTO> findUntreatedPatients(String clinicianID);
+	public List<PatientDTO> findObservedPatients(String clinicianID);
 	public List<PatientSummaryDTO> getPatientSummaries(String clinicianID);
 	public List<OrganizationDTO> findOrganization(String clinicianID);
 	public ClinicianDTO findByID(String clinicianID);
