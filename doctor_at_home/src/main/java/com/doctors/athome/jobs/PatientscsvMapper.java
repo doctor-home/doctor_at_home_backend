@@ -15,7 +15,7 @@ import com.doctors.athome.repos.entities.PatientSummaryDTO;
 
 
 public class PatientscsvMapper implements FieldSetMapper<PatientDTO>{
-	
+
 	@Override
 	public PatientDTO mapFieldSet(FieldSet fieldSet) throws BindException {
 		PatientDTO result = new PatientDTO();
@@ -28,22 +28,22 @@ public class PatientscsvMapper implements FieldSetMapper<PatientDTO>{
 					fieldSet.readInt(7),
 					0,
 					fieldSet.readInt(9),
-					fieldSet.readBoolean(10),
-					fieldSet.readBoolean(15),
+					fieldSet.readString(10).equals("True"),
+					fieldSet.readString(15).equals("True"),
 					convertArrayFileToSingle(fieldSet.readString(12)),
 					fieldSet.readString(8));
 		}
-		
+
 		return result;
 	}
-	
-	
+
+
 	private String convertArrayFileToSingle (String field) {
 		return field.substring(2, field.length()-2);
 	}
-	
-	
-	
-	
+
+
+
+
 
 }
