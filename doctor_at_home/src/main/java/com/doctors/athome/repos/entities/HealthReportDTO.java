@@ -4,16 +4,19 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("HealthReportDTO")
+@CompoundIndex(def="{'healthreportID':1,'timestamp':1}", name="compound_index", unique = true)
 public class HealthReportDTO {
 
 	
 	@Id
 	private String healthreportID;
 	
-	//Tweak around. Mongodb does not accept null values. 
+	//Tweak around. Mongodb does not accept null values.
 	private LocalDateTime timestamp = LocalDateTime.now();
 	
 	private String patientID = "";

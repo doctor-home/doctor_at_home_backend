@@ -14,6 +14,7 @@ import com.doctors.athome.repos.entities.HealthReportDTO;
 import com.doctors.athome.repos.entities.PatientDTO;
 import com.doctors.athome.repos.entities.PatientSummaryDTO;
 import com.doctors.athome.repos.entities.UserDTO;
+import com.mongodb.DuplicateKeyException;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -84,12 +85,18 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	public HealthReportDTO saveHealthReport(HealthReportDTO healthReport) {
-		healthReport = mongoTemplate.save(healthReport);
+		try {
+			healthReport = mongoTemplate.save(healthReport);
+		}
+		catch(DuplicateKeyException ex) {
+			throw new RuntimeException("Failed to add to db. This record already exists!");
+		}
 		Query query = new Query();
 		query.addCriteria(Criteria.where("_id").is(healthReport.getPatientID()));
 		PatientSummaryDTO sum = new PatientSummaryDTO(healthReport.getPatientID(), 
 				mongoTemplate.findOne(query, PatientDTO.class).getName());
 		sum.setLastReport(healthReport);
+		
 		mongoTemplate.save(sum);
 		return healthReport;
 	}
