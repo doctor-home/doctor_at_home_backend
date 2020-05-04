@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST, "/api/dah/v0/patients/health-report*").permitAll() //to be changed to admin role
-		.antMatchers("/api/dah/v0/patients*").hasRole("USER")
+		.antMatchers(HttpMethod.GET, "/api/dah/v0/patients*").hasRole("ADMIN")
 		.antMatchers("/api/dah/v0/clinician*").hasRole("ADMIN")
 		.antMatchers("/api/dah/v0/user*").hasRole("ADMIN")
 		.antMatchers("/api/dah/v0/organization*").hasRole("ADMIN")

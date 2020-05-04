@@ -63,6 +63,9 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	public void deleteByID(String ID) {
+		if(!isPatient(ID)) {
+			throw new RuntimeException("Patient does not belong to current user - " + ID);
+		}
 		Query query = new Query();
 		query.addCriteria(Criteria.where("_id").is(ID));
 		mongoTemplate.remove(query, PatientDTO.class);
